@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector01_3.html</title>
+    <style>
+        #content{
+            background-color: yellow;
+            width: 300px;
+        }
+
+        ul > li{
+            list-style: none; /* 말머리 기호 none */
+            border: 1px green solid;
+            font-size: 1.4em;
+            font-weight: bold;
+            height: 50px;
+        }
+
+        /*
+            선택자 :  -> (콜론 하나)의 의미는 "선택자중에" 라는 의미
+            선택자 :: -> (콜론 두개)의 의미는 "선택자의 컨텐츠중에"의 의미 (컨텐츠: 시작태그와 종료태그 사이의 요소)
+
+            구조 선택자
+
+            nth-child(숫자): 숫자는 1부터 시작하고 특정 자식을 선택할 때
+        */
+        div#content li:nth-child(2){
+            /* content라는 id속성값을 가진 div중에 li 두번째 자식 */
+            color: red;
+        }
+
+        /* nth-child(2n+1): 홀수번째만 선택: n은 0부터 시작 1씩 증가 */
+        div#content li:nth-child(2n+1){
+            color: rgb(114, 13, 184);
+        }
+
+        /* nth-child(2n): 짝수번째만 선택: n은 0부터 시작 1씩 증가 */
+        div#content li:nth-child(2n){
+            color: rgb(3, 148, 128);
+        }
+
+        /* last-child: 구조 선택자 */
+        ul li:last-child{
+            background-color: aqua;
+        }
+
+        div#content li:first-child{
+            border-radius: 10px 10px 0 0;
+            background-color: red;
+        }
+
+        div#content li:last-child{
+            border-radius: 0 0 ;
+            background-color: red;
+        }
+
+        #start::first-letter, #end::first-letter{
+            font-size: 2em;
+        }
+
+        #start::first-line, #end::first-line{
+            color: red;
+            font-weight: bold;
+        }
+
+        /* 첫번째 P태그의 컨텐츠 중에서 마우스로 드래그한 컨텐츠 */
+        #character p:first-child::selection{
+            color: yellow;
+            background-color: black;
+        }
+        /* 왜 거대해진 숫자 2 는 드래그 안먹음? */
+
+    </style>
+</head>
+<body>
+    <h1>구조 선택자</h1>
+  <div id="content">
+      <ul>
+          <li>menu1</li>
+          <li>menu2</li>
+          <li>menu3</li>
+          <li>menu4</li>
+          <li>menu5</li>
+          <li>menu6</li>
+      </ul>
+  </div>
+
+  <h1>문자 선택자</h1>
+  <div id="character">
+      <p id="start">
+          2020년 1월 6일<br />
+          6기 시작
+      </p>
+      <p id="end">
+          2020년 7월 24일<br />
+          6기 종료
+      </p>
+  </div>
+  <div>
+      <ul>
+          <li>menu1</li>
+          <li>menu2</li>
+          <li>menu3</li>
+          <li>menu4</li>
+          <li>menu5</li>
+          <li>menu6</li>
+      </ul>
+  </div>
+</body>
+</html>

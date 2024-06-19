@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas19_3.html</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            var canvas = document.querySelector('#canvas');
+            var ctx = canvas.getContext('2d');
+
+            ctx.strokeStyle='red';
+            ctx.moveTo(60,313);
+            ctx.lineTo(120,166);
+            ctx.lineTo(180,76);
+            ctx.lineTo(240,256);
+            ctx.lineTo(300,70);
+            ctx.lineTo(360,200);
+            ctx.lineTo(420,120);
+            ctx.lineTo(480,70);
+            ctx.stroke();
+
+            //이미지 그리기용
+            var canvasImg = document.querySelector('#canvasImg');
+            ctx = canvasImg.getContext('2d');
+
+            var img = new Image(); //document.createElement('img')와 같다 즉 <img>
+            img.src = '../images/1.jpg'; //<img src = '../images/1.jpg'/>
+            img.onload = function(){
+                //이미지 원본 크기: drawImage(Image객체, X좌표, Y좌표)
+                //ctx.drawImage(img, 0, 0);
+                //이미지 크기 조정:drawImage(Image객체,×좌표, Y좌표, 가로폭, 세로폭)
+                ctx.drawImage(img, 0, 0, 50, 50);
+            };
+        });
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="550" height="450" style="background-color: yellow;"></canvas>
+    <canvas id="canvasImg" width="300" height="300" style="border: 1px green solid"></canvas>
+</body>
+</html>

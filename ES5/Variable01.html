@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variable01.html</title>
+    <script>
+        /*
+            https://developer.mozilla.org/ko/docs/Learn/JavaScript/First_steps/What_is_JavaScript
+
+            - 자스(ES5스펙)에서는 대소문자를 구분한다.
+            - 하나의 명령행이 끝나면 ;로 명령의 끝을 알린다.
+            - 자스에서는 모든 데이타가 객체이다
+            - 자스에서는 변수에 넣은 값에 따라 그 변수의 자료형이 결정된다.
+            - 변수 선언:var라는 키워드 사용
+            - 자바스크립트의 자료형은 Primative 타입(기본 자료형)과 Object(객체)로 나눈다
+            Primative 타입은 string, number (en-US), bigint (en-US), boolean, undefined, symbol등이 있다
+            var 변수명;
+        */
+        //1] 변수 선언
+        var num;
+        //undefined는 하나의 자료형이자 값이다(변수 선언후 초기화 전)
+        //변수의 값이 정의가 안됐다라는 의미
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: undefined, num의 타입: undefined
+        num = 100;
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: 100, num의 타입: number
+        num = 3.14;
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: 3.14, num의 타입: number
+        num = new Number(1000); //new 연산자로 생성된 결과는 무조건 객체(Object)이다
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: 1000, num의 타입: object
+        num = true;
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: true, num의 타입: boolean
+        num = '자바스크립트';
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: 자바스크립트, num의 타입: string
+        num = new String('자바스크립트'); 
+        console.log('num의 값: %s, num의 타입: %s', num, typeof(num)); //num의 값: 자바스크립트, num의 타입: object
+        var nullvar = null;
+        //null은 하나의 값으로 참조하는 객체가 없다라는 의미
+        //자료형으로는 object 타입에 해당.
+        console.log('nullvar 값: %s, nullvar 타입: %s', nullvar, typeof(nullvar)); //nullvar 값: null, nullvar 타입: object
+        //자바는 클래스 정의후 속성 추가 불가(정적객체)
+        //자바스크립트는 Class Less(프로토타입 기반) 즉, 객체(프로토타입:원형)를 먼저 정의하고 이후에 속성 추가(동적객체)
+        //{}로 생성한 객체: 리터럴 객체: 객체 표현 방식, 람다식: 함수 표현 방식
+        var obj = {}; //{}는 new Object()와 같다 //객체를 표현하는 객체 리터럴
+        /*
+            리터럴 자스에서 값을 표현하는 방식증 하나
+            즉 리터럴은 값 그 자체를 나타낸다
+
+            예:
+            var num = 100; //100은 숫자 리터럴
+            var str = '안녕'; ''혹은 ""은 문자열값을 표현하는 리터럴. '안녕'는 문자열 리터럴
+            var b = true; true는 불리언 리터럴
+            var obj ={} {}중괄호가 객체를 표현하는 리터럴 {}는 객체 리터럴            
+        */
+
+
+        console.log('obj 값 [object Object]: %s, obj 타입: %s', obj, typeof(obj)); //obj 값: [object Object], obj 타입: object //[object Object]: 주소
+        console.log('obj 값 (▶Object): %O, obj 타입: %s', obj, typeof(obj));
+        console.log('obj 값 (▶{}}): %o, obj 타입: %s', obj, typeof(obj));
+        obj.username = "가길동";
+        obj.age = 20;
+        //함수형 프로그래밍 지원 즉, 변수에 함수를 할당할 수 있다
+        obj.walk = function(){
+            console.log('나이가 %d살인 %s가 걷다', this.age, this.username);
+        };
+        console.log('obj.walk 값: %o, obj.walk 타입: %s', obj.walk, typeof(obj.walk));
+        obj.walk();
+
+        var obj2 = {
+            username: 'ICT', 
+            'password' : "ICT1234", 
+            "name" : '아이씨티', 
+            eat:function(food){
+                console.log('%s를 %s가 먹다', food, this.username);
+            }
+        };
+        console.log('obj2 값 (▶Object): %O, obj2 타입: %s', obj2, typeof(obj2));
+        obj2.eat('피자');
+        //function add(x, y){};
+        var f = function(x, y){return x + y;} //함수 표현식
+        console.log('f 값: %O, f 타입: %s', f, typeof(f));
+        console.log(f(10, 10));
+        /*
+            [정리]
+            실수나 정수 리터럴(예:100,3.14등) : number타입
+            new Number() : object타입
+            true,false : boolean타입
+            new Boolean() : object타입
+            문자열 리터럴('HELLO' 혹은 "안녕") : string 타입
+            new String() : object타입
+
+            자바스크립트는 데이터의 자료형 관련 크게 Number/Boolean/String타입을 제공한다
+            단,생성자 함수를 이용한 객체 생성은 무조건 Object타입이다
+            변수 선언후 객체를 할당하지 않은 경우: undefined타입
+            {}(객체 리터럴) : object 타입. new Object()의 JSON표기법
+            var f= function(){}(함수 리터럴). new Function()의 JSON표기법
+            f는 function타입이다.
+
+            ※상수와 리터럴의 차이
+            - 상수는 값이 변하지 않는 변수
+            - 리터럴은 변수에 넣는 변하지 않는 데이터를 의미 즉 데이터 자체
+                const NUM = 100;
+                여기서 NUM는 상수이고, 100은 숫자 리터럴이다.
+                코드 상에서 데이터를 표현하는 방식을 리터럴이라 한다
+        */
+
+        //https://www.w3schools.com/js/js_hoisting.asp
+        //추가:var를 붙인 경우와 붙이지 않은 경우의 차이점
+        //var를 붙이면 호이스팅이 · 일에난다(호이스팅:변슈의 스코프안에서 최상단으로 변수 선언코드가 올라간다)
+
+        //console.log(nonHoistVar); //[X] nonHoistVar is not defined
+        //nonHoistVar = '호이스팅되지 않는다';
+
+        //nonHoistVar = '호이스팅되지 않는다';
+        //console.log(nonHoistVar); //[O] var를 붙이지않아도 위에서 아래로 순차적으로 실행돼서
+       
+        
+        console.log(hoistVar); //[O] undefined 출력
+        var hoistVar = '호이스팅 된다'; //var가 붙으면 호이스팅이 일어난다. 호이스팅: 끌어올리다. 선언부가 해당 스크립트의 제일 위로 올라가게됨
+        console.log(hoistVar); //호이스팅 된다 출력
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM10_2.html</title>
+    <script>
+        console.log(window.location); //window는 생략 가능 왜냐면 최상위 객체는 보통 생략가능해서 ...?
+        console.log(window.location.protocol);
+        //console.log(window.location.hostname);
+        console.log(location.hostname);
+        console.log(location.search);
+        console.log(location.href);
+        //location.href = "https://www.nate.com"; //사용자 이벤트(클릭)에 의하지 않고 자동으로 이동 - 뒤로가기 활성화(이전 히스토리 있는 경우)
+        //location.replace("https://www.nate.com"); //사용자 이벤트(클릭)에 의하지 않고 자동으로 이동 - 뒤로가기 비 활성화(이전 히스토리 있어도)I
+        //location.reload(); //새로고침
+        function fnLogin(){
+            //가정]아이디가 "KIM"이고 비번이 "1234"인 경우 회원이라고 가정하자
+            //회원이면 마이페이지(DOM9_4.html)로 자동으로 이동시키자.
+            var username = document.querySelector('#user').value;
+            var password = document.querySelector('#pass').value;
+            if(username === "KIM" && password === "1234"){
+                //location.href = "DOM09_4.html"; //뒤로가기 가능
+                location.replace("DOM09_4.html"); //뒤로가기 불가능
+            }
+            else {
+                //location.href = "DOM09_5.html";
+                location.replace("DOM09_5.html");
+            }
+        }
+        console.log(history); //back: ƒ back() 뒤로가기
+        console.log(navigator);
+        console.log(navigator.userAgent);
+        console.log(navigator.vendor);
+        console.log(navigator.geolocation);
+
+        console.log(screen);
+        console.log(screen.availWidth); //이용가능한 모니터 가로 해상도(트레이바 제외)
+        console.log(screen.availHeight); //이용가능한 모니터 세로 해상도(트레이바 제외)
+        console.log(screen.width); //모니터 가로 해상도(트레이바 포함)
+        console.log(screen.height); //모니터 세로 해상도(트레이바 포함)
+
+        //아래는 브라우저의 body내용이 뿌려지는 영역의 가로/세로 크기
+        window.onresize = function(){
+            console.log('컨텐츠 영역의 가로폭: ', window.innerWidth);
+            console.log('컨텐츠 영역의 세로폭: ', window.innerHeight);
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <h2>location & history & navigator & screen객체</h2>
+    <fieldset>
+        <legend>BOM 객체의 함수 혹은 속성 테스트</legend>
+        아이디 <input type="text" id="user" />
+        비밀번호 <input type="password" id="pass" />
+        <input type="button" value="로그인" onclick="fnLogin();" />
+        <input type="button" value="새로고침" onclick="location.reload();"/>
+        <input type="button" value="history테스트(href)"  onclick="location.href='BOM10_1.html'"/>
+        <input type="button" value="다음 페이지" onclick='history.go(1)'/>
+        <input type="button" value="이전 페이지" onclick='history.back()'/>
+        <input type="button" value="웹브라우저 종류" onclick="console.log(navigator.userAgent);" />
+    </fieldset>
+</body>
+</html>

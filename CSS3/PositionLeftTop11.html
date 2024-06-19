@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PositionLeftTop11.html</title>
+</head>
+<body>
+    <!--
+    position: static 기본값으로 left,top의 영향을 받지 않는다
+    ※원칙]부모 요소에 position속성(absolute 혹은 relative)을 주면 자식은
+    무조건 부모요소를 기준으로 한다.즉 부모 영역의 왼쪽 상단이 오프셋(0,0)이다
+    position이
+    absolute:브라우저 상단(body가 부모인 경우) 혹은 부모를 기준으로 left,top좌표가 결정됨
+    relative:원래 자리한 위치를 기준으로 left,top좌표가 결정됨
+    -->
+
+    <!-- left:100px; top:100px; 아무것도 적용안됨 / position: absolute; 붙여야 적용됨 -->
+    <!--     
+    <fieldset>
+        <legend>부모가 position:absolute 인 경우</legend>
+        <div style="background-color:yellow; position: absolute;">
+        
+        <div style="background-color:red;width:50px;height:50px; left:100px; top:100px; position: absolute;">자식1</div>
+        <div style="background-color:green;width:50px;height:50px; left:150px; top:150px; position: absolute;">자식2</div>
+        <div style="background-color:blue;width:50px;height:50px; left:200px; top:200px; position: absolute;">자식3</div>
+        </div>
+    </fieldset>
+    -->
+
+    <!-- 
+    <fieldset>
+        <legend>부모가 position:relative 인 경우</legend>
+        <div style="background-color:yellow; position: relative; left: 50px; top: 50px;">
+        원래 위치가 기준점(0,0)이 된다
+        <div style="background-color: red; width: 50px; height:50px; left:100px; top:100px; position: relative;">Child1</div>
+        <div style="background-color: green; width: 50px; height:50px; left:150px; top:150px; position: relative;">Child2</div>
+        <div style="background-color: blue; width: 50px; height:50px; left:200px; top:200px; position: relative;">Child3</div>
+        </div>
+    </fieldset>
+    -->
+
+    <!-- 
+    <fieldset>
+        <legend>부모에 position을 안 준 경우</legend>
+        <div style="background-color:yellow;">
+        브라우저 왼쪽 상단이 오프셋이 된다
+        <div style="background-color: red; width: 50px; height: 50px; left:100px; top:100px; position: absolute;">차일드1</div>
+        <div style="background-color: green; width: 50px; height: 50px; left:150px; top:150px; position: absolute;">차일드2</div>
+        브라우저 왼쪽 상단이 오프셋이 된다
+        <div style="background-color: blue; width: 50px; height: 50px; left:200px; top:200px; position: absolute;">차일드3</div>
+        </div>
+    </fieldset>
+    -->
+
+    <fieldset>
+        <legend>Z-INDEX속성</legend>
+        <div style="background-color:yellow; width: 300px; height: 300px; position: relative;">
+        <div style="background-color:red; width: 100px; height: 100px; position: absolute; left: 20px; top: 20px; z-index: 15;">div1</div>
+        <div style="background-color:green; width: 100px; height: 100px; position: absolute; left: 60px; top: 60px; z-index: 10;">div2</div>
+        <div style="background-color:blue; width: 100px; height: 100px; position: absolute; left: 100px; top: 100px; z-index: 12;">div3</div>
+        </div>
+    </fieldset>
+
+    <h2>버튼 클릭시 div를 특정 위치(정 가운데)에 띄우기</h2>
+    <div  style="min-width: 25em; margin-bottom: 10px; background-color: rgb(109, 146, 15); width: 100%; height: 300px;">
+        <div id="child" style="text-align: center; line-height: 100px; background-color: rgb(231, 225, 116); width: 50%; height: 100px; display: none; position: absolute;">
+            나이를 입력 :<input type="text"/>
+        </div>
+    </div>
+    <button>입력창 띄우기</button>
+    <script>
+        var child = document.querySelector("#child");
+        var parent = child.parentElement;
+        var button = parent.nextElementSibling;
+        // 자식 div를 띄울 고정 좌표 위치 (left, top) 구하기 - 브라우저 크기를 줄이는 경우
+        // 정 가운데 배치가 안된다 (오프셋이 고정돼서: 좌표를 px로 줘서)
+        /*
+        console.log(screen.availWidth);//해상도 1920 X 1080
+        console.log(parent.style.width);//100%
+        console.log((parseInt(parent.style.width)/100)/2);
+        var parentWidth=screen.availWidth*(parseInt(parent.style.width)/100)/2;
+        var leftChild = parentWidth-parentWidth/2;
+        var topChild = parseInt(parent.style.height)/2 - parseInt(child.style.height)/2;
+        console.log('left:%s,top:%s',leftChild,topChild);//left:480,top:100*/
+        button.onclick=function(){
+            /*
+            //left:100px,top:100px위치에 띄우기
+            //child.style.left = 100+'px';
+            //child.style.top = 100+'px';
+            //정가운데 띄우기
+            child.style.left = leftChild+'px';
+            child.style.top  = topChild+'px';*/
+            //고정좌표로 하지 않고 해상도에 따라 오프셋 위치를 변하도록(반응형)
+            //수평으로 가운데 정렬
+            parent.style.display='flex';
+            parent.style.justifyContent='center';
+            //수직으로 가운데
+            parent.style.alignItems="center";
+            //브라우저를 스마트폰 해상도 크기로 줄일시 입력 텍스트 상자가 밑으로 흘려내려가는거
+            //방지하기 위한 자식DIV의 최소폭 지정
+            child.style.minWidth="288px";
+            child.style.display='block';
+        };
+
+    </script>
+    
+</body>
+</html>

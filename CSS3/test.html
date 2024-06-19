@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div > div{
+            background-color: rgb(255, 147, 147);
+            border: 2px rgb(101, 160, 53) solid;
+            /* box-sizing: border-box; */
+            /* flex-basis: 300px; */
+            flex-grow: 1;
+        }
+        .box {
+            display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* align-content: center; > 의미 없음: flex-wrap:wrap이 없어서.. */
+            /* flex-wrap: wrap; */
+            /* align-content: center; */
+            /* align-items: flex-end; */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <div class="box" style="background-color: rgb(119, 201, 255); height: 300px;">
+        <div style="height: 200px;">One</div>
+        <div style="font-size: 2em; width: 200px;">Two</div>
+        <div style="font-size: 1.5em;">Three</div>
+    </div> -->
+    <div class="box" style="background-color: rgb(119, 201, 255); height: 300px;">
+        <div style="align-self: flex-start;">One</div>
+        <div style="align-self: center;">Two</div>
+        <div style="font-size: 1.5em;">Three</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerXXXtextContent22.html</title>
+</head>
+<body>
+    <h2 id="h2"><i>inner계열 및 textContent<span style="color:red;font-style:normal;">속성</span></i></h2>
+    <input type="button" value="시작태그와 종료태그사이에 있는값 얻기" />
+    <input type="button" value="innerHTML"  />
+    <input type="button" value="innerText" />
+    <input type="button" value="textContent" />
+    <span id="span">텍스트</span>
+    <p>
+        HELLO
+        JAVASCRIPT
+    </p>
+
+    <script>
+        /*
+            시작태그와 종료태그가 있는 모든 태그들은
+            innerHTML과 innerText 및 textContent속성을 갖고 있다.
+            (단,<input /> ,<br/>나 <img/>등은 제외)
+
+            시작태그와 종료태그 사이의 컨텐츠가 inner계열 속성 및 textContent에 저장됨.
+
+            시작태그와 종료 태그 사이에 태그요소가 있는 경우
+            innerHTML:태그 요소를 실행
+            innerText 와 textContent:태그요소를 제외한 순수 텍스트만 저장
+
+            시작태그와 종료 태그 사이에 빈 공백이 많은 경우
+            innerHTML 와 textContent:빈 공백 그대로를 저장
+            innerText : 빈 공백 제외
+        */
+        var h2 = document.querySelector('#h2');
+        var span = document.querySelector('#span');
+        var p = document.querySelector('p');
+        document.querySelector('input[type=button]:nth-child(2)').onclick = function(){ //왜 첫번째 버튼을 눌러야 input[type=button]:nth-child(2)이거임?
+            console.log(h2.innerText); //inner계열 및 textContent속성
+            console.log(h2.innerHTML);
+            console.log(h2.textContent);
+        };
+
+        //공백이 많은 컨텐츠 읽어오기
+        console.log('--------------innerText------------------');
+        console.log(p.innerText); //공백 ㄴ
+        console.log('--------------textContent------------------');
+        console.log(p.textContent); //공백 포함
+        console.log('--------------innerHTML------------------');
+        console.log(p.innerHTML); //공백 포함
+
+        //컨텐츠 설정하기
+        document.querySelector('input[type=button]:nth-child(3)').onclick = function(){
+            span.innerHTML = '<strong>컨텐츠 설정</strong>'; //컨텐츠 설정 (bold적용된 상태로)
+        };
+
+        document.querySelector('input[type=button]:nth-child(4)').onclick = function(){
+            span.innerText = '<strong>컨텐츠 설정</strong>'; //<strong>컨텐츠 설정</strong>
+        };
+
+        document.querySelector('input[type=button]:nth-child(5)').onclick = function(){
+            span.textContent = '<strong>컨텐츠 설정</strong>'; //<strong>컨텐츠 설정</strong>
+        };
+
+    </script>
+</body>
+</html>

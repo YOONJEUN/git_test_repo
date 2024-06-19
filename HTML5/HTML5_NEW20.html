@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5_NEW20.html</title>
+</head>
+<body>
+    <fieldset>
+        <legend>HTML5에 새롭게 추가된 요소(태그)나 속성들</legend>
+        <h2>텍스트에 하이라이트 효과주는 태그(mark)</h2>
+        <p>
+            주요 그룹 총수들이 <mark>윤석열</mark> 대통령 미국 국빈방문 동행을 위해 23일을 전후로 출국길에<br/>
+            올랐다. 최근 글로벌 <mark>경제불황</mark> 속 미국의 자국우선주의 압박까지 커가는 상황에서<br/>
+            <span style="background-color: yellow;">한미동맹</span> 기반 새로운 활로를 찾는 것이 과제다.
+        </p>
+        <h2>진행율을 표시하는 태그(progress)</h2>
+        <progress max="200" value="100" style="width:300px;height:50px"></progress>
+        <h2>자동완성태그(datalist)</h2>
+        <label for="keyword">검색어를 입력하세요</label>
+        <!-- input의 list="items"와 <datalist id="items"> 의 items가 동일해야 두 개가 바인딩 됨 -->
+        <input type="search" id="keyword" list="items"/>
+        <datalist id="items">
+            <option value="제주도"></option>
+            <option value="제주공항"></option>
+            <option value="제부도"></option>
+            <option value="제자"></option>
+            <option value="코로나"></option>
+            <option value="코로나19"></option>
+            <option value="코카콜라"></option>
+            <option value="코알라"></option>
+            <option value="HTML5"></option>
+            <option value="HYBRID"></option>
+        </datalist>
+        <h2>이미지를 그룹화 태그(figure)</h2>
+        <figure>
+            <!-- <figcaption>으로 넣어준 텍스트는 이미지 상단 왼쪽정렬로 텍스트 나열 -->
+            <figcaption style="text-align: center; width: 100; ">자바이미지1</figcaption>
+            <img src="../images/1.jpg" alt="첫번째 이미지" width="100" height="50"/>
+        </figure>
+        <figure>
+            <figcaption>자바이미지2</figcaption>
+            <img src="../images/2.jpg" alt="두번째 이미지" width="100" height="50"/>
+        </figure>
+        <h2>template태그</h2>
+         <!--
+        자스를 이용해서 HTML요소등을 동적으로  추가할때 템플릿으로 사용할때
+        브라우저에 상에는 보이지 않은다(렌더트리에서 제외된다)
+        -->
+        <template>
+            <li>아이템1</li>
+            <li>아이템2</li>
+            <li>아이템3</li>
+        </template>
+        <h2>새롭게 추가돤 속성들</h2>
+        <h3>multiple,accept속성(type="file")</h3>
+        <input type="file" multiple accept="image/png,image/jpeg"/>
+        <h3>autofocus속성</h3>
+        <input type="text" autofocus/>
+        <h3>contenteditable속성</h3>
+        <p contenteditable="true">
+            주요 그룹 총수들이 <mark>윤석열</mark> 대통령 미국 국빈방문 동행을 위해 23일을 전후로 출국길에<br/>
+            올랐다. 최근 글로벌 <mark>경제불황</mark> 속 미국의 자국우선주의 압박까지 커가는 상황에서<br/>
+            <span style="background-color: yellow;">한미동맹</span> 기반 새로운 활로를 찾는 것이 과제다.
+        </p>
+        <h3>hidden속성</h3>
+        <!-- style="display: none" === hidden -->
+        <input type="button" value="버튼" hidden/>
+        <h3>required속성</h3> <!-- 유효성 체크 (required 부여 시 입력 안 할 경우 경고창 발생, 무조건 입력하게 요구) -->
+        <form action="https://www.nate.com">
+            이름 <input type="text" name="name" required/>
+            남자 <input type="radio" name="gender" value="male" required/>
+            여자 <input type="radio" name="gender" value="female" required/>
+            동의 <input type="checkbox" name="accept" value="OK" required/>
+            <input type="submit" value="확인"/>
+        </form>
+        <h3>placeholder속성</h3>
+        아이디 <input type="text"  placeholder="아이디 입력"/>
+        비밀번호 <input type="password" placeholder="비밀번호 입력" />
+    </fieldset>
+    <!-- const f = dovument.querySelector('body > fieldset > input[type=file]:nth-child(17)'); -->
+</body>
+</html>

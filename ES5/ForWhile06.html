@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForWhile06.html</title>
+    <script>
+        /*
+        자바: for문 안에서 선언된 변수는 for문이 끝나면 소멸된다
+        자바스크립트: script태그 안에서 선언된 변수는
+        해당 페이지 모든 영역에서 사용가능하다.(호이스팅:변수 선언이나 함수 선언문은 맨위로 호이스팅된다)
+
+        for(var 변수 =초기값; 반복조건; 증감식){
+            반복조건이 참일때 수행할 명령문들
+        }
+        */
+        
+        // 자바는 블럭스코프인 것처럼 자바스크립트는 함수스코프 
+        // (for문 내부에서 선언된 변수여도 for문이 함수는 아니니까 아무데서나 사용 가능): 자바랑 가장 큰 차이점
+
+        for(var i = 0; i < 5; i++){
+            var num = 100;
+            console.log('i = ', i);
+        }
+        //위 코드는 인터프리터 시 아래처럼 호이스팅이 일어난다.
+        /*
+        var i;
+        var num;
+        for(i=0;i < 5;i++){
+                num=100;
+                console.log('i=',i);
+        }*/
+        console.log('for문이 끝난 후: i = %s, num: %s', i, num)
+
+
+
+
+
+        /*  10000
+            01000
+            00100
+            00010
+            00001
+            브라우저에 출력하기 (for문버전, while문 버전) 
+            for문 사용 시에는 줄바꿈시 <br/>태그 사용   
+            단, while문 사용 시에는 table태그를 사용해라 
+        */
+
+        document.write('<h2> for문으로 출력(&lt;br&gt; 태그)</h2>');
+        for(var i = 0; i < 5; i++){
+            for(var k = 0; k < 5; k++){
+                if(i == k) document.write('1 ');
+                else document.write('0 ');
+                document.write('&nbsp;');
+            }
+            document.write('<br/>');
+        }
+
+
+        document.write('<h2> while문으로 출력(&lt;table&gt;태그)</h2>'); //행렬 <tr><td>
+        i = 1;
+        document.write("<table style='text-align: center; width: 300px; background-color: red'; border-spacing:1px>");
+        while(i <= 5){
+            k = 1;
+            document.write('<tr style="background-color: white">');
+            while(k <= 5){
+                if(i === k) document.write('<td>1</td>');
+                else document.write('<td>0</td>');
+                document.write('&nbsp;');
+                k++;
+            }
+            document.write('<br/>');
+            i++;
+            document.write('</tr>');
+        }
+        document.write("<table>");
+            
+        //내가한거
+        /* 
+        var a = 0;
+        document.write('<table style="background-color: aliceblue; font-weight: bold">');
+        while(a < 5){
+            var b = 0;
+            document.write('<tr>');
+            while(b < 5){
+                document.write('<td>');
+                if(a == b){
+                    document.write('1');
+                }
+                else document.write('0');
+                
+                document.write('</td>');
+                b++;
+            }
+            document.write('<br/>');
+            document.write('</tr>');
+            
+            a++;
+        }
+        document.write('</table>');
+        */ 
+
+
+
+        /* 문] table태그를 사용하여 구구단을 출력하여라.
+            (for문 혹은 while문 사용) */
+
+        document.write('<h2> 구구단 출력 첫번째 - 문자열로 미 누적 출력</h2>');
+        document.write("<table style='text-align: center; width: 800px; height: 300px; background-color: green'; border-spacing:1px>");
+        for(i = 1; i < 10; i++){
+            document.write('<tr style="background-color: white">');
+            for(k = 2; k < 10; k++){
+                document.write('<td style="font-weight: bold">', k, ' * ', i, ' = ', i * k, '</td>');   
+            }
+            document.write('</tr>');
+        }
+        document.write("</table>");
+
+
+        document.write('<h2> 구구단 출력 두번째 - 문자열로 누적</h2>');
+        var table = "<table style='text-align: center; width: 800px; background-color: gray; border-spacing:1px'>";
+        for(i = 1; i < 10; i++){
+            table += '<tr style="background-color: white">';
+            for(k = 2; k < 10; k++){
+                table += '<td>' + k + ' * ' + i + ' = ' + i * k + '</td>'; 
+                //talbe += '<td style="font-weight: bold">'+ k + ' * ' + i + ' = ' + i * k + '</td>';   
+            }
+            table += '</tr>';
+        }
+        table += "</table>";
+        //변수에 누적한 문자열 출력
+        document.write(table);
+
+        document.write('<h2> 구구단 출력 세번째 - 여러 DOM API 사용</h2>');
+        var tableNode = document.createElement('table');
+        tableNode.setAttribute('style', 'text-align: center; width: 800px; background-color: aqua; border-spacing:1px');
+        for(i = 1; i < 10; i++){
+            var trNode = document.createElement('tr');
+            trNode.setAttribute('style', "background-color: white");
+            for(k = 2; k < 10; k++){
+                var tdNode = document.createElement('td'); //속성은 없지만 값이 있다
+                var text = document.createTextNode(k + ' * ' + i + ' = ' + i * k);
+                tdNode.appendChild(text);
+                trNode.appendChild(tdNode);
+            }
+            tableNode.appendChild(trNode);
+        }
+        window.addEventListener("DOMContentLoaded", function(){
+            document.querySelector('#gugudan').insertAdjacentElement('afterend', tableNode); //구구단을...아래로 내리기....?
+        });
+
+
+
+
+
+        //내가 한 거
+        /* 
+        document.write('<h2> for문으로 출력(구구단)</h2>');
+        document.write("<table style='text-align: center; width: 800px; height: 300px; background-color: green'; border-spacing:1px>");
+        for(var i = 1; i < 10; i++){
+            document.write('<tr style="background-color: white">');
+            for(var k = 2; k < 10; k++){
+                //document.write(k, ' * ', i, ' = ', i * k);
+                document.write('<td style="font-weight: bold">', k, ' * ', i, ' = ', i * k, '</td>');
+                
+                //document.write('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            }
+            //document.write('<br/>');
+            document.write('</tr>');
+        }
+        document.write("</table>");
+
+
+        
+
+        document.write('<h2> while문으로 출력(&lt;table&gt;태그)(구구단)</h2>'); //행렬 <tr><td>
+        i = 1;
+        document.write("<table style='text-align: center; width: 800px; height: 300px; background-color: #5cffd1'; border-spacing:1px>");
+        while(i < 10){
+            k = 2;
+            document.write('<tr style="background-color: white">');
+            while(k < 10){
+                document.write('<td style="padding: 10px">', k, ' * ', i, ' = ', i * k, '</td>');
+                
+                document.write('&nbsp;');
+                k++;
+            }
+            document.write('<br/>');
+            i++;
+            document.write('</tr>');
+        }
+        document.write("</table>");
+
+ */
+
+
+
+    </script>
+</head>
+<body>
+    <h2 id="gugudan">for문 및 while문 연습</h2> 
+    <script>
+        console.log('for문이 끝난 후(body태그 내부): i = %s, num: %s', i, num)
+
+
+    </script>
+    
+</body>
+</html>

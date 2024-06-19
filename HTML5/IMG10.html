@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMG10.html</title>
+</head>
+<body>
+    <!--
+        img태그: 이미지를 표시할때 사용하는 태그
+        속성:
+        src: 해당 이미지의 경로(절대경로 혹은 상대경로) ※※※※※※※※※
+        alt:대체 텍스트(이미지가 표시안될때 텍스트 표시됨)
+        width:이미지의 가로폭 지정
+        height:이미지의 세로폭 지정
+            (width, height 지정 안 할 경우 원본사이즈 출력)
+
+        usemap: 이미지를 map으로 사용할때 값 지정
+                값지정시 반드시 앞에 #을 붙인다.
+                map태그와 쌍으로 사용한다
+
+       - inline element
+       - 종료태그가 없다
+        ※width와 height 미 지정시 이미지 원본 크기 그대로 표시됨.
+          a태그를 이용해서 이미지에 링크걸때는 반드시
+          border값을 0으로
+          안그러면 테두리가 자동적으로 생김(IE의 경우)
+    -->
+    <h2>img 태그</h2>
+    <h3>이미지 원본 크기대로 표시</h3>
+    <img src="../images/java_logo.jpg" alt="자바로고 이미지"/>
+    <h3>이미지 원본 크기 조정</h3>
+    <img src="../images/java_logo.jpg" alt="자바로고 이미지" width="48" height="48"/>
+    <img src="../images/java_logo.jpg" alt="자바로고 이미지" style="width: 48px; height: 48px;"/>
+    <h3>이미지에 링크 걸기</h3>
+    <a href="https://www.java.com">
+        <img src="../images/java_logo.jpg" alt="자바로고 이미지" width="48" height="48"/>
+    </a>
+</body>
+</html>

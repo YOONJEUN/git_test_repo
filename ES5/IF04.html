@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF04.html</title>
+    <script>
+        /*
+        if(비교식이나 논리식뿐 아니라 모든식 즉 모든값이 올 수있다.)
+        자바에서는 true아니면 false를 판단할 수 있는
+        비교식이나 논리식이 와야 한다(산술식(x))
+        자스에서는 모든 식이 가능하다.
+        0이나 null 그리고 false 이외의  모든 값은  true로 판단하기때문에.....
+        */
+
+        console.log('[NaN 판단하기]'); //변수 === NaN 무조건 false 고로 isNaN()로 판단
+        var nan = parseInt('Hello');
+        console.log(nan); //number타입
+        if(isNaN(nan)) console.log('%s는 NaN이다 즉 숫자가 아니다', nan);
+        else console.log('%s는 NaN이 아니다 즉 숫자다', nan)
+
+        console.log('[undefined 판단하기]'); //변수 === undefined로 판단
+        var unvar; //undefined 타입
+        console.log(unvar);
+        console.log(unvar == undefined); //true
+        console.log(unvar === undefined); //true
+        //문자열로 비교하면 무조건 false
+        console.log(unvar == 'undefined'); //false
+        console.log(unvar === 'undefined'); //false
+        if(unvar === undefined) console.log('값이 할당되지 않았다');
+        else console.log('값이 할당되었다');
+
+        console.log('[null 판단하기]'); //변수 === null로 판단
+        var nullVar = null; //object 타입
+        console.log(nullVar); //null
+        console.log(nullVar == null); //true
+        console.log(nullVar === null); //true
+        //문자열로 비교하면 무조건 false
+        console.log(nullVar == 'null'); //false
+        console.log(nullVar === 'null'); //false
+        
+        //타입 판단은 문자열로 하자 ?
+        console.log('[기타 값의 타입 판단하기]'); //변수 === '타입명'로 판단
+        var str = 'HELLO';
+        //console.log(str == string); //[X] string is not defined //undefined와 null은 정의가 다 돼있음
+        //console.log(str === string);
+        console.log(typeof str == 'string'); //true
+        console.log(typeof str === 'string'); //true
+        var obj = {};
+        console.log(typeof obj == 'object'); //true
+        console.log(typeof obj === 'object'); //true
+
+        var num1 = num2 = 10; //변수 두 개 동시에 선언 및 초기화
+        if(num1 - num2) console('0은 참이다');
+        else console.log('0은 거짓이다');
+
+        /* 삼항 연산자
+
+        자바와는 다르게 판단식(모든식)이 참이거나 거짓일때
+        결과값을 변수에 담지 않아도 됨.
+        방식1]
+        //자바에서는 에러]
+        판단식 ? 참일때 출력문 : 거짓일때 출력문;
+        방식2]
+        var 변수 =판단식 ? 참일때 값 : 거짓일때 값;
+        */
+
+        //방식1] 자바 X
+        num1 > num2 ? console.log('num1이 num2보다 크다') : console.log('num1이 num2보다 작거나 같다') ;
+        //방식2] 자바 O
+        var result = num1 > num2 ? 'num1이 num2보다 크다' : 'num1이 num2보다 작거나 같다' ;
+        console.log(result);
+        //방식3] 자바 O
+        console.log(num1 > num2 ? 'num1이 num2보다 크다' : 'num1이 num2보다 작거나 같다');
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>성적 출력</legend>
+        국어 <input type="text" id="kor" />
+        영어 <input type="text" id="eng" />
+        수학 <input type="text" id="math" />
+        <span id='span' style='color:red;font-weight:bold;'>여기에 출력</span>
+        <button onclick="getGrade();">확인</button>
+    </fieldset>
+    <script>
+        var korNode = document.getElementById('kor');
+        var engNode = document.getElementById('eng');
+        var mathNode = document.getElementById('math');
+        var spanNode = document.querySelector('#span');
+        function getGrade(){
+            console.log('버튼의 클릭 이벤트 발생');
+            var kor = parseInt(korNode.value); //text박스에 입력하면 숫자라고해도 string으로 입력됨 그러므로 int로 변환해줘야 함
+            var eng = parseInt(engNode.value);
+            var math = parseInt(mathNode.value);
+            var avg = (kor + eng + math)/3;
+            console.log('평균: ', avg);
+            if(avg >= 90) spanNode.textContent = 'A학점';
+            else if(avg >= 80) spanNode.textContent = 'B학점';
+            else if(avg >= 70) spanNode.textContent = 'C학점';
+            else if(avg >= 60) spanNode.textContent = 'D학점';
+            else spanNode.textContent = 'F학점';
+
+
+        }
+    </script>
+    
+</body>
+</html>

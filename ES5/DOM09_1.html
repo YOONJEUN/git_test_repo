@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM09_1.html</title>
+    <script>
+    /*
+        BOM(Browser Object Model) : 브라우저를 스크립트 언어로 제어하기 위해 객체로 모델링 한 것.
+                                    그래서 자바스크립트에서 BOM API를 사용해서 브라우저를 제어 할 수 있다
+                                    window객체(브라우저와 같다)는 BOM의 최상위 객체이다.즉 전역객체로 브라우저당 1개이다
+
+        DOM(Document Object Model) : HTML문서를 스크립트 언어로 제어하기위해 객체로 모델링 한 것
+                                    그래서 자바스크립트에서 DOM API를 사용해서 HTML문서를 제어 할 수 있다
+                                    DOM의 최상위 노드는 window객체의 자식인 document객체이다
+                                    document객체는 HTML문서 하나당 하나다
+
+
+        아래는 HTML문서와 관련된 DOM API이다
+    
+        1.노드 생성
+            document객체의 createElement("태그명") 혹은 createTextNode("텍스트")
+
+        2.생성된 노드 부모에 붙이기
+            부모요소.prepend(삽입할 노드 혹은 문자열(텍스트노드)) :부모의 자식요소 맨 앞에 붙인다
+            부모요소.append(삽입할 노드 혹은 문자열(텍스트노드)) :부모의 자식요소 맨 뒤에 붙인다
+            부모요소.appendChild(삽입할 노드(노드타입)): append()와 같으나 문자열은 인자로 받지 못한다
+
+            부모요소.insertBefore(삽입할 노드, 기존 자식노드): 삽입할 노드가 기존 자식 노드 이전 위치에 삽입된다
+                                                            prepend()와 기능은 같으나 인자 개수가 다르다
+
+            기존요소.insertAdjacentElement(위치, 삽입할 노드(노드 타입));부모요소가 필요없다 즉 기존요소를 기준으로 위치를 정해서 삽입한다
+            기존요소.insertAdjacentHTML(위치, 삽입할 문자열('태그형태의 문자열')): 삽입할 문자열은 태그형태여야한다
+
+            (https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement)
+
+            ※insertBefor 와 insertAdjacentElement차이점
+            insertBefore() requires you to provide the parent node,
+            an existing child node, and the new node to be inserted;
+            the new node is put before the child node
+            insertAdjacentElement only requires you to provide an existing node
+            and the new node.
+            The new node is inserted at some place related to the existing node.
+            There's no need to provide the parent node.
+
+        3.노드 추가 및 삭제
+
+        [추가]
+            -부모의 자식요소 끝에 추가
+            부모요소.append(자식요소 혹은 문자열 / 삽입할 노드(노드타입 혹은 문자열)); 
+            부모요소.appendChild(자식요소);
+            -부모의 자식요소 앞에 추가
+            부모요소.prepend(자식요소 혹은 문자열 / 삽입할 노드(노드타입 혹은 문자열));
+
+        [삭제]
+            부모요소.removeChild(자식요소)
+            자신요소.remove() = 해당요소.remove()
+
+        append()와 appendChild()의 차이점:
+            Element.append() allows you to also append string objects, whereas Node.appendChild() only accepts Node objects.
+            Element.append() has no return value, whereas Node.appendChild() returns the appended Node object.
+            Element.append() can append several nodes and strings, whereas Node.appendChild() can only append one node.
+
+        4.노드 복제
+            복제할요소.cloneNode(true)
+
+        5.노드 가져오기:
+            태그명으로 얻어 오기
+                - document.getElementsTagName("태그명");
+            name속성으로 얻어 오기
+                - document.getElementsByName("name속성 값");
+            클래스명으로 얻어오기
+                - document.getElementsByClassName("클래스명")
+            id값으로 얻어 오기
+                - document.getElementById("id속성값");
+
+            CSS셀렉터로 얻어 오기 (※)
+                - document.querySelector('css선택자')
+                    : 일치하는 요소가 있으면 무조건 첫번째 요소만 반환.없으면 null반환
+                - document.querySelectorAll('css선택자')
+                    : 일치하는 모든 요소반환(Nodelist) 없으면 length가 0인 Nodelist반환
+
+        6. 노드의 속성
+            childNodes속성는 텍스트나 주석등도 노드로 처리
+            children속성은 엘리먼트 노드(태그)만 노드로 처리
+
+            아래는 엘리먼트 노드뿐만 아니라 텍스트 노드(주석포함)도 대상이된다
+            parentNode
+            firstChild  는 children[0]과 같다
+            lastChild
+            previousSibling
+            nextSibling
+            ↓↓
+            엘리먼트 노드(태그) 대상일때는
+            parentElement
+            firstElementChild  는 children[0]과 같다
+            lastElementChild
+            previousElementSibling
+            nextElementSibling
+
+        7.노드 대체하기
+            원본요소.replaceWith(새노드(대체요소));
+    */
+        
+        window.addEventListener('DOMContentLoaded', function(){
+            var fieldset = document.querySelector('fieldset');
+            console.log(fieldset);
+            console.log('%O', fieldset);
+            var divNode = document.querySelector('div.box');
+            var spanNode = divNode.querySelector('span'); //var spanNode = document.querySelector('div.box > span');
+
+            //childNodes 속성은 NodeList타입 (모든 노드(주석 및 텍스트 포함)를 담은 컬렉션(유사배열))
+            console.log(divNode.childNodes); //NodeList(4) [text, comment, span, text] > 유사배열
+            console.log(divNode.childNodes[0]); //※ ▶ #text 노드의 data속성에 값이 들어있다 > data: "\n        "
+
+            console.log(divNode.childNodes[0].nodeName); //#text (노드명)
+            console.log(divNode.childNodes[0].tagName); //undefined
+            console.log(divNode.childNodes[1].nodeName); //#comment (노드명)
+            console.log(divNode.childNodes[2].nodeName); //SPAN (태그네임은 대문자로 출력) (노드명: 태그 대문자명)
+            console.log(divNode.childNodes[2].tagName); //SPAN
+            //children 속성은 HTMLCollection타입(엘리먼트 노드(태그)만 담은 컬렉션(유사배열))
+
+            console.log(divNode.children); //▶ HTMLCollection [span]
+            console.log(divNode.children[0].nodeName); //SPAN (노드명: 태그 대문자명)
+            console.log(divNode.children[0].tagName); //SPAN (노드명: 태그 대문자명)
+
+            var buttonNode = fieldset.querySelector('button'); //버튼이 하나뿐이니 태그명으로 가져오기
+            buttonNode.onclick = function(){ //이벤트 핸들러의 this는 이벤트 발생한 타겟 
+                //console.log(this); //<button>표만들기</button>
+                console.log(this.childNodes[0]); //"표만들기"
+                var row = parseInt(fieldset.children[1].value); //querySelector안해도 된다 ?? why
+                //var column = parseInt(fieldset.children[2].value); //아래와 동일
+                var column = parseInt(fieldset.children[1].nextElementSibling.value);
+                console.log(row, column); //4 5
+                // 1. table 엘리먼트 생성
+                var tableNode = document.createElement('table'); //<table></table>
+                // table 엘리먼트에 속성 추가
+                //<table style = "background-color: black; border-spacing: 1px"></table>
+                tableNode.setAttribute('style', 'background-color: black; border-spacing: 1px solid');
+                
+                for(var i = 0; i < row; i++){
+                    //2. tr엘리먼트 생성
+                    var trNode = document.createElement('tr');
+                    //trNode.setAttribute('style','background-color: white;');
+                    trNode.style = 'background-color: white';
+                    for(var k = 0; k < column; k++){
+                        //3. td엘리먼트 생성
+                        var tdNode = document.createElement('td');
+                        var textNode = document.createTextNode(i + '행 ' + k + '열');
+                        //4. 텍스트 노드를 td에 추가
+                        tdNode.append(textNode);
+                        //5. 생성된 td를 tr에 추가
+                        trNode.append(tdNode);
+                    }
+                    //6. tr을 table에 추가
+                    tableNode.append(trNode);
+                }
+                //7. table을 div에 추가
+                //divNode.append(tableNode);
+                //divNode.appendChild(tableNode);
+                //divNode.prepend(tableNode);
+
+                //divNode.insertBefore(tableNode, spanNode);
+                //spanNode.insertAdjacentElement('beforebegin', tableNode);
+                //문자열이 아닌 노드를 인자로 전달시
+                //spanNode.insertAdjacentHTML('beforebegin', tableNode); //[object HTMLTableElement] 표 안 나옴
+                //태그형태의 문자열 전달시
+                console.log(tableNode.outerHTML);
+                console.log(typeof tableNode.outerHTML);
+                spanNode.insertAdjacentHTML('beforebegin', tableNode.outerHTML); //두번째 인자는 무조건 string이어야 한다
+
+
+            };
+
+        });
+
+
+
+
+    </script>
+</head>
+<body>
+    <h2>DOM API 사용하기:노드 추가하기</h2>
+    <fieldset>
+        <legend>표 설정하기</legend>
+        <input type="text" class="table" /> 행&nbsp;&nbsp;&nbsp;
+        <input type="text" class="table" /> 렬
+        <button>표만들기</button>
+    </fieldset>
+    <div class="box">
+        <!-- comment --><span>여기에 표를 위치 시킵니다.</span>
+    </div>
+</body>
+</html>

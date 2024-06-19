@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImportMedia15.html</title>
+    <!-- Link 태그를 이용한 외부 css파일 연결 -->
+    <!-- <link href="styles/import.css" rel="stylesheet"/> -->
+    <style>
+        /* 맨 윗줄에 표기하기
+        import 규칙을 이용한 외부 css파일 연결
+        반드시 style태그 안에 태그 내 최상단에 위치 (그렇지 않으면 적용X) */
+        @import url(styles/import.css);
+        .content{
+            color: yellow;
+            background-color: black;
+        }
+        /* media 규칙은 위치에 상관없음 */
+        @media screen {
+            /* 현재 문서가 서비스되는 장치가 모니터일때는 아래 css 적용 */
+            .content{
+                color: aliceblue;
+            }
+        }
+        @media print {
+            /* 현재 문서가 서비스되는 장치가 인쇄장비(프린터)일때는 아래 css 적용 */
+            .content{
+                color: black;
+                background-color: white;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="content">
+        <p>
+            이런 가운데 전세 수요는 폭발하고 있다. 한국감정원의 지난 5일 기준 서울의 전세 수급지수는 121.4로 2016년 1월 이후 가장 높은 수준을 보였다. 수도권 역시 117.6으로 같은 해 2월 이후 최고치다. 이 지수는 0~200으로 표현되는데, 200을 향해갈수록 수요가 더 많다는 것을 드러낸다. 서울을 비롯한 수도권 아파트 전셋값이 60주 이상 오름세를 보이는 것도 공급자 우위 시장이 굳어진 데 따른 것이다.
+        </p>
+    </div>
+</body>
+</html>

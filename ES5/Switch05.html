@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch05.html</title>
+    <script>
+        /*
+        switch(식):
+        자바: 식이 정수값(byte/short/char/int)이 나올 수 있는
+        정수식(산술식)이거나 문자열(String: JDK7.0 부터 가능)이어야 한다(long[x])
+
+        자바스크립트: 모든 값이 나올수 있는 모든 식이 가능하다
+        즉 정수뿐만 아니라 실수 그리고 논리값(true/false)
+        문자열도 가능하다.
+        */
+
+        var f = 3.0001;
+        switch (f) { //자바 X
+            case 3.00000001:
+            case 3.000001:
+            case 3.0001:
+                console.log('f는 3이다'); break;
+            default: console.log('f는 3이 아니다');
+        }
+
+        switch (10 % 2 == 0) {
+            case true: console.log('짝수다'); break;
+            case false: console.log('홀수다'); break;
+                        
+        }
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

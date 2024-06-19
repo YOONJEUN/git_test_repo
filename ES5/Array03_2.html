@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        console.log('[배열의 주요 메소드]');
+        var method = [];
+        console.log("1.배열의 요소 추가 : 인덱스 지정 혹은 push()함수 혹은 unshift()함수");
+        //1. 인덱스를 지정해 주가
+        method[0] = 100;
+        //2. push() 메서드 사용 - 배열의 끝에 요소를 추가. 새로운 길이를 반환
+        console.log(method.push(200)); //2
+        //3. unshift() 메서드 사용 - 배열의 맨 앞에 요소를 추가, 
+        // 기본 요소들의 인덱스 값이 1씩 증가, 새로운 길이를 반환
+        console.log(method.unshift(300)); //3
+        for(var i in method){
+            //인덱스는 타입이 string이다
+            console.log('인덱스: %d, 요소값: %s, 인덱스의 타입: %s', i, method[i], typeof i); //인덱스의 타입: String
+            if(i == 1) console.log(i == 1, i === 1); //true false
+        }
+        console.log("2. 배열의 요소 꺼내오기 : 인덱스 지정 혹은 pop()함수 혹은 shift()함수");
+        console.log(method[1]);
+        console.log('인덱스 꺼내온 후 배열의 크기: ', method.length); //3
+
+        /*
+        //pop(): 맨 끝에서 요소를 가져오고 배열에서 제거가 되고 꺼내온 요소를 반환
+        console.log('꺼내온 요소: ', method.pop()); //꺼내온 요소:  200
+        console.log('pop으로 꺼내온 후 배열의 크기: ', method.length); //2
+        console.log(method.pop()); //100
+        console.log(method.pop()); //300
+        console.log(method.pop()); //undefined: 에러 아님. 즉, 꺼내올 게 없다
+        */
+        
+        //shift(): 맨 앞에서 요소를 가져오고 배열에서 제거
+        console.log(method.shift()); //300
+        /*
+        console.log(method.shift()); //100
+        console.log(method.shift()); //200
+        console.log(method.shift()); //undefined. 꺼내올 게 없다
+        */
+        console.log('3. 배열 요소의 일부를 추출하기');
+
+        //4.slice(start[, end]) -start인덱스부터 끝까지 혹은
+        //                      start부터 end-1인덱스까지의 배열요소로 새로운 배열을 생성.
+        //                      인자가 음수면 우측(마지막 원소)에서부터 -1,-2...
+        //끝 인덱스 지정시 끝인덱스(음수 혹은 양수) -1 하자
+        //not in-place방식(원본이 변하지 않는다)
+        method.push(300);
+        method.push(400);
+        method.push(500);
+        console.log(method); //(5) [100, 200, 300, 400, 500]
+        var method_ = method.slice(3); //slice()는 immutable한 메소드 (= 원본을 변경시키지 않는다)
+        console.log('원본 배열: ', method); // (5) [100, 200, 300, 400, 500]
+        console.log('추출한 배열: ', method_); // (2) [400, 500]
+        console.log('추출한 배열: ', method.slice(2, 4)); // (2) [300, 400]
+        console.log('추출한 배열: ', method.slice(2, -1)); // (2) [300, 400]
+        console.log('추출한 배열: ', method.slice(-3, -1)); // (2) [300, 400]
+
+        //5.splice(start[,삭제할 개수[,추가할 값,...]])
+        // 추가할 값들은 start와 삭제한 값 사이에 추가됨.
+        // ※원본배열이 변경됨(in-place 방식). 삭제한 요소로 새로운 배열이 생성됨.
+        //  삭제 및 추가할 수도 있다
+        //method_ = method.splice(2); //2번 인덱스부터 끝까지 삭제 // 원본: (2) [100, 200], 삭제한 거: (3) [300, 400, 500]
+        //method_ = method.splice(2, 2); // 원본: (3) [100, 200, 500], 삭제한거: (2) [300, 400]
+        //method_ = method.splice(2, 2, '삼백', '사백', '오백'); 
+        //2번 인덱스부터 0개 요소 삭제. 즉, 2번 인덱스 자리에 추가할 값 삽입(shift)
+        method_ = method.splice(2, 0, '삼백', '사백', '오백'); // (8) [100, 200, '삼백', '사백', '오백', 300, 400, 500]
+        console.log('원본 배열: ', method); 
+        console.log('삭제한 배열: ', method_); 
+
+        console.log('5. 요소 찾기');
+        //6. 배열 요소 찾기
+        //indexOf(), lastIndexOf() - 배열의 요소 중에 특정한 값의 인덱스 반환
+        //찾으면 해당 인덱스를 찾지 못하면 -1을 반환
+        method.push('오백');
+        console.log(method); //(9) [100, 200, '삼백', '사백', '오백', 300, 400, 500, '오백']
+        console.log(method.indexOf('오백')); //4
+        console.log(method.lastIndexOf('오백')); //8
+        console.log(method.indexOf('백')); //-1
+        
+        //7.map함수:배열 내의 모든 요소 각각에 대하여 인자로 전달된 콜백 함수를 적용하여 새로운 배열을 반환
+        //          즉 배열의 모든 요소를 변경하는 함수이다
+        //arr.map(callback(currentValue[, index[, array]])[, thisArg])
+        //https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+        var arr = [1, 2, 3, 4, 5];
+        /*
+        var arr_ = arr.map(function(currentValue, index){
+            console.log('currentValue: %s, index: %s', currentValue, index);
+            return currentValue * 2;
+        });
+        */
+        var arr_ = arr.map((currentValue, index)=>{
+            console.log('currentValue: %s, index: %s', currentValue, index);
+            return currentValue * 2;
+        });
+
+        console.log('원본 배열: ', arr);
+        console.log('변경된 배열: ', arr_);
+        var not_ = ['FOO', 'BOO', 'BAR'];
+        var not_new = not_.map(currentValue => currentValue.toLowerCase());
+        console.log(not_new); //(3) ['foo', 'boo', 'bar']
+    
+        console.log('7.배열의 요소수를 하나로 만들기')
+        //8.reduce함수:배열의 각 요소에 대해 주어진 **리듀서**(reducer: 콜백함수) 함수를 실행하고,
+        //             하나의 결과값을 반환
+        //arr.reduce(callback[, initialValue])
+        //https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+        //Not in-place
+        var reducer = arr.reduce((accumulator, currentValue) => accumulator + currentValue);
+        console.log(reducer, typeof reducer); //5개의 요소가 1개로 reduce됐다
+        console.log('원본 배열: ', arr);
+
+        console.log(not_.reduce((acc, curr) => acc + ',' + curr).toLowerCase()); //foo,boo,bar 하나의 문자열로 연결됨
+
+
+        console.log('8.배열의 모든 요소를 하나의 문자열로 만들기');
+        //join([구분자])-배열의 모든 요소들을 구분자로 연결하여 하나의 문자열로 변환. (쉼표(,)가 기본 값)
+        //Not in-place
+        console.log(arr.join(), typeof arr.join());
+        console.log(not_);
+        console.log(arr.join('♣'));
+
+        console.log('9.배열의 모든 요소를 거꾸로 재배치하기');
+        //reverse()-배열의 요소 순서를 반대로 하여 반환
+        //원본 배열 변경 (in-place)
+        console.log(arr.reverse());
+        console.log('원본 배열: ', arr);
+
+
+        console.log('10. 배열 정렬하기');
+        //sort([콜백함수])- 배열 안의 요소들을 정렬하여 반환
+        //인자(콜백함수)가 없을 경우 배열 안의 원소들을 오름차순으로 정렬 - 원본배열이 변경됨
+        //숫자일때는 -
+        //문자열일때는 localCompare()함수 적용
+        //function(인자1,인자2){return 인자1-인자2;//오름차순} (인자1,인자2)=>인자1-인자2
+        //function(인자1,인자2){return 인자2-인자1;//내림차순}
+        //function(인자1,인자2){return 인자1.localeCompare(인자2);//오름차순}
+        //function(인자1,인자2){return 인자2.localeCompare(인자1);//내림차순}
+        //in-place
+        var newArr = [5, 2, 1, 4, 3];
+        newArr.sort();
+        console.log('오름차순: ', newArr.sort());
+        console.log('원본 배열: ', newArr);
+        console.log('내림차순: ', newArr.sort((x, y) => y - x));
+        console.log('오름차순: ', not_.sort());
+        console.log('내림차순: ', not_.sort((x, y) => y.localeCompare(x)));
+
+
+        console.log('11.배열에 여러요소 한꺼번에 추가하기');
+        //concat() - 기존 배열의 모든 요소에 concat() 메서드의 인자들을
+        //추가한 새로운 배열 반환
+        //원본 배열은 변하지 않고 기존 배열에 추가된 새로운 배열을 반환.
+        //Not in-place
+        //newArr : (5) [5, 4, 3, 2, 1]
+        newArr.splice(0, newArr.length, 5, 3, 1, 4, 9);
+        //newArr : (5) [5, 3, 1, 4, 9]
+        console.log(newArr.concat(10, 7, 2, 6, 8));
+
+
+        console.log('12.순회하면 배열 요소 출력하기');
+        //배열명.forEach(function(요소를 담을 변수[,인덱스 저장 변수]){ });
+        //변수는 배열에서 꺼내온 요소를 담는다
+        //for~in: 배열(index), 객체(key) 꺼내오지만
+        //forEach는 배열에서만 사용
+        newArr.sort();
+        console.log(newArr); //(5) [1, 3, 4, 5, 9]
+        newArr.forEach(function(curr, index){
+            /*
+            if(index == 1){
+                console.log("두번째 순환입니다.");
+                //break; //Illegal break 반복문이 아니라서 break 사용 불가능
+            }
+            */
+           //기본적으로 배열의 각 요소에 대해서 이 콜백함수가 적용된다
+           //즉, 인덱스가 1일때만 return된다
+            if(index == 1) return; //index 1일때만 빼고 0, 2, 3, 4 다 출력됨: 뭔뜻이냐? > 각 요소만큼 함수가 각각 출력된다는 뜻
+            console.log('현재 요소: %s, 인덱스: %s', curr, index);
+        });
+
+        //forEach()에서 break하는 방법. 즉, 더 이상 배열에서 요소를 꺼내오지 않는 방법 (순환하지 않는 방법)]
+        var arr = ['A', 'B', 'C', 'D', 'E'];
+        console.log('방법1) try ~catch절');
+        //방법1: try ~catch
+        try {
+            arr.forEach(curr => {
+            console.log(curr);
+            //"C"까지 출력하고 멈추기
+            if(curr === 'C') throw new Error('"C" 이후는 출력 ㄴㄴ');
+            });
+        } catch (e) {
+            //console.log('%O', e);
+            //console.log('에러 메시지: ', e.message);
+        }
+
+
+        console.log('방법2) some() 함수');
+        //방법2: Array.prototype.some(판별함수):forEach()처럼 순회하면서 배열 안의 어떤 요소라도 
+        //      인자로 전달된 콜백함수 (주어진 판별 함수)를 통과하는지 테스트하는 함수다. 
+        //      즉 하나라도 주어진 판별 함수를 통과(true반환)하면 some()함수는 true반환하고
+        //      배열의 모든 요소가 통과하지 못하면 some()함수는 false 반환한다
+        //      위 some()함수의 기능을 사용해서 중간에 true를 반환하면 순회를 멈추자
+        //
+        //https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+        /*
+            some() 메서드는 배열 안의 어떤 요소라도 주어진 판별 함수를 적어도 하나라도 통과하는지 테스트합니다. 
+            만약 배열에서 주어진 함수가 true을 반환하면 true를 반환합니다. 
+            그렇지 않으면 false를 반환합니다. 
+            이 메서드는 배열을 변경하지 않습니다.
+        */
+        //console.log(arr.some(x => x === 'C')); //true
+        //return true는 break, return false는 continue(순회)와 같다
+        arr.some(x => {console.log(x); if(x === 'C') return true; else return false;});
+        
+
+        console.log('방법3) every() 함수');
+        //방법3: Array.prototype.every(판별함수):
+        //      forEach()처럼 순회하면서 배열 안의 모든 요소가 주어진 판별 함수를 통과하는지 테스트
+
+        //      즉, 배열의 모든 요소가 인자로 전달된 판별 함수를 통과해야 true 반환
+        //      중간에 판별함수가 false를 반환하면 순회를 멈춘다
+        //https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+        //return fasle 는 break, return true 는 continue(순회)와 같다
+        arr.every(x => {console.log(x); if(x === 'C') return false; else return true;});
+        
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+

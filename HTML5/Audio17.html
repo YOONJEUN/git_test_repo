@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio17.html</title>
+</head>
+<body>
+    <!--https://caniuse.com/-->
+    <h2>기본 audio(src속성과 controls만 사용) 태그</h2>
+    <audio src="media/audio.mp3" controls>
+        audio태그를 지원하지 않은 브라우저입니다<br/>
+        여기를 <a href="media/audio.mp3">클릭</a> 하세요
+    </audio>
+    <h2>audio 하위태그인 &lt;source&gt;태그 사용</h2>
+    <audio controls >
+        <!-- 아래 중 지원하는 미디어만 재생됨.즉 하나만 재생됨. 위에서부터 순차적으로 실행 시도 -->
+        <source src="media/audio.ogg" type="audio/ogg"/>
+        <source src="media/audio.mp3" type="audio/mp3"/>
+    </audio>
+
+
+
+
+    <h2>커스텀 오디오</h2>
+    <div>
+        <progress value="0" ></progress>
+    </div>
+    <div>
+        <input type="button" value="PLAY" onclick="play();"/>
+        <input type="button" value="PAUSE" onclick="pause();"/>
+        <input type="button" value="STOP" onclick="stop();"/>
+        &nbsp;&nbsp;<span id="current"></span> / <span id="total"></span>
+    </div>
+    <script>
+        //Audio 객체 생성]
+        //var audio = new Audio(); //<audio></audio>
+        //audio.currentSrc = "media/audio.mp3";
+        //혹은
+        //var audio = new Audio("media/audio.mp3");
+        //혹은
+        var audio = document.createElement('audio');
+        audio.setAttribute("src", "media/audio.mp3");
+        console.log('%O', audio);
+        //span 객체 얻기
+        var currentSpan = document.querySelector('#current');
+        var totalSpan = document.querySelector('#total');
+        //progress 객체 얻기
+        var progress = document.querySelector('progress');
+        audio.ontimeupdate = function(){
+            //오디오의 총 재생시간 얻고 설정
+            totalSpan.textContent = audio.duration;
+            //오디오의 현재 재생시간 얻고 텍스트 설정
+            currentSpan.textContent = audio.currentTime;
+            //타임 업데이트에 따른 프로그레스의 진행정도 표시
+            //최대값(max속성) 설정
+            progress.max = audio.duration;
+            //진행정도 표시
+            progress.value = audio.currentTime;
+        }
+
+        function play(){
+            audio.play();
+        }
+
+        function pause(){
+            audio.pause();
+        }
+
+        function stop(){
+            //stop()함수 지원 안 함
+            //아래처럼 stop기능 구현
+            if(audio.played){
+                audio.currentTime = 0;
+                audio.pause();
+            }
+        }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

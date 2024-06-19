@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegExpr11.html</title>
+    <script>
+        //RegExp객체 생성
+        //RegExp객체.test(문자열)함수 : 일치하는 패턴을 찾으면 true반환, 그렇지 않으면 false반환
+        //String객체.match(RegExp객체) : g옵션이 없는 경우 처음 발견된 패턴만 배열로 반환
+        //                              g옵션이 있는 경우 발견된 모든 패턴 배열로 반환
+        //RegExp객체.exec(문자열)함수 : g옵션에 상관없이 패턴과 일치하는 첫번째 요소만 반환
+
+        //1. g옵션을 안 준 경우 (global match,문자열내에서 모든 패턴 찾음(생략시 일치하는 첫 요소만 검색))
+        //var regexp1 = /\d{2}/; //[0-9]{2} 와 같다
+        //var regexp1 = new RegExp("\\d{2}"); ///\d{2}/;와 같다
+        var regexp1 = new RegExp(/\d{2}/);
+        console.log(regexp1); // > /\d{2}/
+        console.log('%O', regexp1); //source: "\\d{2}" 정규표현식 문자열로
+        console.log(regexp1.source);
+
+        var str = 'AB100CDE99FGHI';
+        console.log(regexp1.test(str)); //true
+        //['10', index: 2, input: 'AB100CDE99FGHI', groups: undefined]
+        //'10': 패턴과 일치한 문자열
+        //index: 2 : 대상 문자열에서 패턴의 시작위치
+        console.log("str.match(regexp1): ", str.match(regexp1)); //0: "10" //['10', index: 2, input: 'AB100CDE99FGHI', groups: undefined]
+        console.log(str.match(regexp1)[0]); //10
+        console.log(str.match(regexp1).index); //찾은 패턴의 시작 인덱스
+        console.log("regexp1.exec(str)", regexp1.exec(str)); //['10', index: 2, input: 'AB100CDE99FGHI', groups: undefined]
+        console.log(regexp1.exec(str).index); //찾은 패턴의 시작 인덱스
+
+        //2. g옵션을 준 경우
+        //var regexp2 = /\d{2}/g;
+        //var regexp2 = new RegExp("\\d{2}", 'g');
+        var regexp2 = new RegExp(/\d{2}/, 'g');
+        console.log(regexp2.test(str)); //true
+        console.log("str.match(regexp2): ", str.match(regexp2)); // ▶ (2) ['10', '99']
+        console.log(str.match(regexp2).index); //undefined //왜 undefined인지 모르겠음 ~~~~~
+        console.log("regexp2.exec(str)", regexp2.exec(str)); // ▶ ['10', index: 2, input: 'AB100CDE99FGHI', groups: undefined]
+        
+        //3. 추출하기
+        var str2 = "[17.07.11 23:29:11] [INFO ]  [eclipse.galileo-bean-thread-50618297 galileo.site.SiteBean:317 ] - ##galileo_bean end. MessageExchange_ID:id:localhost-15a6308ba1c-6:86071562";
+        var regexp3 = /\[(\d{2}\.\d{2}\.\d{2}\s\d{2}:\d{2}:\d{2})\]\s\[(INFO)\s\]\s\s\[(.+)\s\]\s-\s##(.+)/i;
+        var isMatch = regexp3.test(str2);
+        console.log(isMatch); //true
+        if(isMatch){
+            console.log('[추출방법 첫번째]');
+            //괄호 () 로 그룹을 만들어주고 RegExp.$그립번호 와 같은 방식으로 접근.
+            //정규표현식에서 첫번째 괄호가 그룹번호 1부터 시작한다
+            //RegExp.$0 은 없다
+            console.log("regexp3: %O", regexp3);
+            console.log(RegExp.$1);
+            console.log(RegExp.$2);
+            console.log(RegExp.$3);
+            console.log(RegExp.$4);
+
+            console.log('[추출방법 두번째]');
+            console.log(str2.match(regexp3));
+            str2.match(regexp3).forEach(function(item, index){
+                if(index != 0) console.log(item);
+            });
+        }
+
+        //m 플래그를 사용하면 여러 행 모드(multiline mode)를 활성화한다.
+        //여러행 모드는 ^와 $의 작동 방식에만 영향을 준다.
+        //여러행 모드에서는 ^와 $가 전체 문자열의 처음과 끝뿐 아니라 각 행의 시작과 끝에서도
+
+        var str4=
+            `#국어
+            영어
+            #산수
+            미술
+            #음악`;
+        console.log(str4);
+        var regexp4 = /^\s*#[가-힣]+/gm; //^: 시작
+        console.log(regexp4.test(str4));
+        console.log(str4.match(regexp4)); //(3) ['#국어', '            #산수', '            #음악']
+
+        function checkEmail(){
+            var email = document.querySelector('[type=email]').value;
+            var pattern = /\w+@(\w+)\.com/i;
+            if(!pattern.test(email)){
+                alert('이메일 형식이 아닙니다.');
+                return;
+            }
+            console.log(RegExp.$1);
+        }
+
+
+
+    </script>
+</head>
+<body>
+    이메일을 입력하세요?
+    <input type="email" />
+    <input type="button" value="확인" onclick="checkEmail()"/>
+</body>
+</html>

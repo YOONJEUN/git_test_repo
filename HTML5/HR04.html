@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR04.html</title>
+</head>
+<body>
+    <!--
+        hr: 괘선을 나타 내는 태그
+        속성:
+            color-괘선의 색상 지정(style로 적용)
+            size-괘선의 두께 지정(숫자만)
+            width-괘선의 가로폭 지정(숫자또는 %로 지정가능)
+            align-left,right,center(가운데정렬 기본)
+
+        상기 속성으로 지정시 웹표준에 어긋남
+        css로 지정
+        - 종료 태그가 없음
+        - block element
+    -->
+    <h2>hr태그 연습</h2>
+    <div style="background-color: rgba(224, 255, 245, 0.829); width: 600px;">
+        <h3>hr기본 태그</h3>
+        <hr/>
+        <h3>괘선의 색상 지정</h3>
+        <!--웹 표준에 어긋남(속성이 제거됨)-->
+        <!--
+        <hr color="red"/> 
+        -->
+        <hr style = "background-color:red; height: 1px;"/>
+        <h3>괘선의 두께 지정</h3>
+        <!--웹 표준에 어긋남(속성이 제거됨)-->
+        <!--
+        <hr size="30"/>
+        -->
+        <hr style="height: 30px;"/>
+        <h3>괘선의 가로폭 지정</h3>
+        <!--웹 표준에 어긋남(속성이 제거됨)-->
+        <!--
+        <hr width="50%"/>
+        -->
+        <hr style="width: 50%;"/>
+        <h3>괘선의 정렬</h3>
+        <!--웹 표준에 어긋남(속성이 제거됨)-->
+        <!--
+        <hr width="50%" align="right"/>
+        -->
+        <hr style="width: 50%; margin-right: 0;"/>
+        <h2>다음 중 웹브라우저가 아닌 것은?</h2>
+        <hr/>
+        <ul style="list-style: decimal;">
+            <li>크롬</li>
+            <li>파이어 폭스</li>
+            <li>익스플로러</li>
+            <li>오페라</li>
+            <li>사파리</li>
+        </ul>
+
+
+    </div>
+</body>
+</html>

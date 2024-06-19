@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector01_1.html</title>
+    <style>
+        /* CSS 코드는 style 태그 안에서 작성 */
+        /* 전체 선택자: *로 모든 태그(body이하부터) 선택*/
+        /* cascade ? */
+
+        *{
+            /* background-color: yellowgreen; */
+            margin: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        /* 태그 선택자: 태그명으로 선택 */
+        span{
+            color: green;
+            font-size: 1.8em;
+        }
+
+        /* 클래스 선택자: .클래스명으로 선택 - 한 페이지 안에 클래스명 중복 가능 */
+        .positive{
+            font-weight: bold;
+            background-color: yellow;
+        }
+        .negative{
+            color: grey;
+            font-size: .8em;
+        }
+
+        /* 하위 선택자: 스페이스로 구분하여 선택 */
+        .mydiv span{ 
+            /* mydiv안에 있는 span만 선택 */
+            color: red;
+            font-size: .8em;
+        }
+
+        /* 자식 선택자: >로 구분해서 선택 */
+        .mydiv > span{ 
+            /* mydiv라는 클래스명을 가진 요소의 자식인 span만 선택 */
+            color: cyan;
+            font-size: 1.2em;
+        }
+
+        /* 다중 선택자: ,(콤마)로 구분해서 여러 선택자 사용 */
+        .multi h2, .multi h3, h4, h5{
+            color: blue;
+        }
+
+        /* 아이디 선택자: #아이디명으로 선택 - 아이디는 한 페이지 안에서 중복 불가 */
+        #bas{
+            color: rgb(68, 0, 255);
+        }
+
+        /* li태그 중에서 myclass 라는 클래스명을 가진 li태그 */
+        li.myclass{
+            color: rgb(238, 255, 0);
+        }
+
+        /* li의 하위 태그중에서 myclass라는 클래스명을 가진 태그 */
+        li .myclass{
+            /* li태그의 하위태그 중에 myclass라는 class를 가진 자식 요소 */
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>태그 선택자/클래스 선택자</h2>
+    <div>
+        저의 <span class="positive">장점</span>은 <span class="positive">긍정적인 성격</span> 입니다.<br/>
+        저의 <span class="negative">단점</span>은 <span class="negative">지저분한 스타일</span> 입니다.
+    </div>
+
+    <h2>하위 및 자식 선택자</h2>
+    <div class="mydiv">
+        <span>DIV안의 SPAN태그</span>
+        <fieldset>
+            <span>FIELDSET안의 SPAN태그</span>
+        </fieldset>
+    </div>
+
+    <h2>다중 선택자</h2>
+    <div class="multi">
+        <h2>제목2</h2>
+        <h3>제목3</h3>
+        <h4>제목4</h4>
+        <h5>제목5</h5>
+    </div>
+
+    <h2>아이디 선택자</h2>
+    <ul>
+        <li class="myclass"><b  class="myclass">축구</b></li>
+        <li id="bas">농구</li>
+        <li class="myclass">배구</li>
+    </ul>
+
+    <h3>h3태그입니다</h3>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreakContinue07.html</title>
+    <script>
+        /*
+            break문: switch문이나 반복문을 빠져 나갈때
+            continue문:반복문 처음으로 갈때
+            break문이나 continue문 이후의 문장은 실행이 안됨.
+        */
+        //break; //[X]
+        //continue; //[X]
+        var i = 0;
+        while(-1){ //자바의 while(true)와 같다
+            i++;
+            console.log('i = ', i);
+            console.log('break 이전 출력문');
+            if(i === 3) break;
+            console.log('break 이후 출력문');
+            console.log('continue 이전 출력문');
+            if(i % 2 === 0) continue;
+            console.log('continue 이후 출력문');
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

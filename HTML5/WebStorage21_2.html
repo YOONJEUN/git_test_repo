@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebStorage21_2.html</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>웹 스토리지를 이용한 방문자 회원수 카운팅(로컬 스토리지)</legend>
+        <span id="display" style='color:red;font-size:1.2em;font-weight: bold;'></span>
+        <button onclick="removeStorage();">세션 스토리지 삭제</button>
+    </fieldset>
+    <script>
+        //브라우저의 웹 스토리지 지원여부 판단
+        console.log(typeof Storage !== undefined); //true
+        if (typeof Storage !== undefined) { //웹 스토리지를 제공하는 브라우저
+            console.log('%O', Storage);
+            var span = document.querySelector('#display');
+            span.textContent = '웹 스토리지를 지원하는 브라우저';
+            console.log(sessionStorage);
+            var counter = sessionStorage.getItem('counter');
+            console.log(counter); //null
+            if (counter === null) { //최초 방문
+                //방문횟수 1로 초기화
+                sessionStorage.setItem('counter', 1);
+                span.textContent = '처음 방문하셨군요';
+
+            }
+            else { //로컬스토리지에 키값이 있는 경우 (즉 재방문)
+                counter++;
+                span.textContent = `${counter}번째 방문하셨군요`;
+                sessionStorage.setItem('counter', counter);
+            }
+        }
+
+        function removeStorage() {
+            span.textContent = `방문 횟수가 초기화되었습니다`;
+            //sessionStorage.removeItem('counter');
+            sessionStorage.clear();
+        }
+
+    </script>
+</body>
+
+</html>

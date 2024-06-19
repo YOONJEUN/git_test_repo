@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyframe14_1.html</title>
+    <style>
+        /* 키프레임 규칙(@keyframe)을 이용한 애니메이션*/
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        #wrap{
+            display: flex;
+            flex-direction: column;
+        }
+
+        #rect{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            /* 키 프레임 애니메이션 이름 지정 */
+            /* 아래 두 개는 필수 속성 (지정해야 애니메이션 발생) */
+            /* 
+            animation-name: myani1;
+            animation-duration: 3s; 
+            animation-delay: 2s;
+            animation-iteration-count: 3; */
+            /* 축약 */
+            /* 순서는 상관없다.단 duration은 delay보다 앞에
+            여러번 수행시(animation-iteration-count) delay은 최초 한번만 적용된다. */
+            /* animation: myani1 3s 2s 1; */
+        }
+
+        @keyframes myani1 {
+            /* myani1이라는 애니메이션 이름을 가진 요소에 키프레임 규칙 적용 */
+            /* 키 프레임 규칙 작성 - 그래야 애니메이션이 일어남 */
+            /* 방법1 - to블락만 기술해도 무방 */
+            /* 
+            from{
+                width: 100px;
+                height: 100px;
+            } 
+            to{
+                width: 400px;
+                height: 400px;
+                background-color: yellow;
+            }
+            */
+
+            /* 방법2 */
+            50%{
+                /* animation-duration: 3s; 의 50%인 1.5s 경과한 시점 지정 */
+                width: 250px;
+                height: 250px;
+                background-color: rgb(6, 175, 161);
+            }
+            100%{
+                width: 400px;
+                height: 400px;
+                background-color: yellow;
+            }
+        }
+        @keyframes myani2 {
+            50%{
+                width: 200px;
+                height: 200px;
+                transform: rotate(180deg);
+                border-radius: 100px;
+            }
+            100%{
+                width: 400px;
+                height: 400px;
+                transform: rotate(360deg);
+                border-radius: 200px;
+            }
+        }
+
+        @keyframes myani3 {
+            to{
+                transform: translate(400px, 400px);
+            }
+        }
+        /* 마우스 오버 시 애니메이션 중지 */
+        #circ2:hover{
+            animation-play-state: paused;
+        }
+
+
+        #circ1{
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: myani2 3s 3s 1;
+        }
+
+        #circ2{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            animation: myani3 infinite 3s 2s;
+        }
+        
+    </style>
+</head>
+<body>
+    <h2>키프레임 규칙을 이용한 애니메이션</h2>
+    <div id="wrap">
+        <div id="rect"></div>
+        <div id="circ1">CIRCLE</div>
+        <div id="circ2"></div>
+	</div> 
+    
+</body>
+</html>

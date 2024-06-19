@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function08_4.html</title>
+    <script>
+        /*
+        자스는 프로토타입 기반의 언어로 프로토타입(원형)을 만들고
+        프로토타입으로 객체를 만들고 속성이나 함수를 추가한다
+        자스는 객체 기반의 함수형 프로그래밍 언어다
+
+        자스에서 객체를 만드는 방법 두 가지(new Object()제외)
+
+        자스의 모든 객체는 Object라는 프로토타입을 상속받는다
+        Object 프로토타입의 메소드
+        toString():객체의 주소를 문자열로 반환 ("[object Object]")
+        valueOf():객체의 주소를 반환([object Object])
+
+
+        1. 중괄호 사용(객체 Literal-JSON(JavaScript Object Notation))
+            var 객체명 = {};(new Object()와 같다) 혹은 {"속성(키)":"값",....}
+            속성 추가시에는 객체명.속성명=값;
+            함수 추가시에는 객체명.함수명 =function(){};
+
+        2. 생성자 함수 사용
+            function 생성자함수명(){
+                this를 사용해서 속성 설정
+            }
+            -보통 일반함수와 구분하기위해 함수명을 대문자로 시작
+            -return문을 안쓴다
+            -생성자 함수에는 주로 속성만 정의한다
+            var 객체명= new 생성자함수명();
+            -함수는 객체명.prototype.함수명=function(){}로 별도로 정의한다.
+
+        ※상속
+            자식의 생성자 함수 안에서
+            부모생성자함수.apply(this, arguments);(자바의 super()와 같다)
+            부모자 생성자의 this와 arguments(매개변수)를 적용한다는 의미
+            메소드는
+            자식생성자함수.prototype = Object.create(부모생성자함수.prototype);
+            Object의 create()함수로 부모의 프로토타입으로 자식의 프로토타입을
+            생성한다는 의미.이러면 부모의 메소드를 상속받게 된다
+            자식생성자함수.prototype.constructor = 자식생성자함수;//생략시 자식의 생성자 함수가 부모가 된다 즉 반드시 있어야 한다
+        */
+
+        //[첫번째: {}로 객체 만들기]
+        var brace = {}; //new Object();
+        console.log('타입: %s, brace: %O', typeof brace, brace);
+
+        for(var key in brace) console.log('key: %s, value: %s', key, brace[key]);
+        //Object.keys(객체) : 키값을 배열로 반환
+        var keys = Object.keys(brace);
+        console.log(keys); //[] 키가 없다
+        Object.values(brace);
+        //Object.values(객체) : 값들을 배열로 반환
+        var values = Object.values(brace);
+        console.log(values); //[] 값이 없다
+
+        //속성 추가
+        brace.username = '가길동';
+        brace.years = 20;
+        //함수 추가
+        brace.print = function(){
+            console.log(this); //여기서 this는 brace
+            console.log(this === window);
+            console.log('이름: %s, 나이: %s', this.username, this.years);
+        }
+        brace.makeFriend = function(username, years){ //인자로 받는 값이 친구
+            console.log('%s의 친구 이름은 %s이고 그 친구의 나이는 %s살이다', this.username, username, years);
+        };
+        console.log('[키와 값 출력]');
+        var keys = Object.keys(brace);
+        console.log(keys);
+        var values = Object.values(brace);
+        console.log(values);
+
+        //속성 값 읽기 : 객체명.키 혹은 객체["키"]
+        //단, 키를 변수 처리 시에는 반드기 객체[변수명]으로 접근해야 한다.
+        console.log(brace.username);
+        console.log(brace['username']);
+
+        console.log(brace.years);
+        console.log(brace['years']);
+        //함수 호출
+        brace.print();
+        brace.makeFriend('가길순', 19);
+
+        //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+        //※JSON.stringify(JSON객체): JSON 형태의 문자열로 변환. 즉, object 타입을 string타입으로 변환(JSON객체의) 옆에 못씀////
+        //'{"키": "값", ...}' 형태의 문자열
+        //stringify하면 함수는 빼줌 ?
+        console.log(brace); //{username: '가길동', years: 20, print: ƒ, makeFriend: ƒ}
+        var jsonString = JSON.stringify(brace);
+        console.log(typeof jsonString); //string
+        console.log(jsonString); //{"username":"가길동","years":20}
+
+        console.log(jsonString.username); //undefined
+
+        /* 
+        function a(){
+            console.log(this);
+        }
+        a(); // == window.a();*/
+
+        //※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+        //JSON.parse(JSON형태의 문자열) : 문자열을 자바스크립트 객체(즉, JSON)로 변환(string) 옆에 못씀////
+        //JSON.parse()적용 시 키는 반드시 ""으로 감싸야 정상적으로 파싱된다. 
+        var jsonObject = JSON.parse(jsonString);
+        console.log(jsonObject, " : ", typeof jsonObject);
+        console.log(jsonObject.username); //가길동
+
+        //=====================================================
+        //객체 리터럴({})로 객체 생성시 처음부터 속성 및 함수 설정]
+        //키값은 ' 나 "로 감싸지 않아도 된다(자스코드에서).
+        //단, 값은 받드시 감싸야 한다(숫자는 예외)
+        var brace2 = {num1: 10, 'num2': '20', "num3" : "삼십", 
+                        add: function(){
+                            return this.num1 + parseInt(this.num2);
+                        }, 
+                        minus: function(){
+                            return this.num1 - parseInt(this.num2);
+                        }};
+        console.log(brace2.num1);
+        console.log(brace2['num2']);
+        console.log(brace2.add());
+        console.log(brace2.minus());
+
+        //속성 두개 추가
+        brace2.num4 = 40;
+        brace2["num5"] = 50;
+        console.log(brace2);
+        console.log(JSON.stringify(brace2));
+        //※객체의 속성 삭제: delete 객체명.속성명 혹은 delete 객체명['속성명']
+        // > 자바스크립트의 객체는 추가 삭제가 자유롭다 (객체 리터럴)
+        delete brace2.num4;
+        delete brace2['num5'];
+        delete brace2.minus;
+        console.log(brace2);
+        //[두번째: 생성자 함수로 객체 만들기]
+        //생성자 함수로 객체를 만들면 같은 구조의 객체를 계속해서 찍어낼 수 있다. ({}로 객체를 만들 때는 불가)
+        //구분을 위해 함수 대문자로 시작
+        function Human(username, years){
+            //Human객체 속성 정의
+            console.log(this); //this는 window객체
+            this.username = username;
+            this.years = years;
+            this.birthday = new Date();
+            //※return 키워드를 사용하지 않아도 new 연산자와 함께 쓰면 생성된 객체를 반환하는 것과 같다
+        }
+        //Human을 일반함수처럼 호출 시 - this는 Window객체
+        console.log(Human('가길동', 20)); //Window {} undefined (함수가 반환 안해서)
+        //Human을 new로 객체화 시 - this는 객체화된 ?????????????????????????????????????????????????
+        console.log(new Human('가길동', 20)); //Human {} //this는 인스턴스화된 Human객체 
+        // (생성자 함수는 return안해도 생성된 객체 반환: new라는 연산자 때문에)
+        
+        //함수 추가하기
+        //생성자 함수.prototype.함수명 = function(){}; 자바의 인스턴스형 메소드와 같다
+        Human.prototype.print = function(){
+            console.log('이름: %s, 나이: %s, 생일: %s', this.username, this.years, this.birthday);
+        };
+        // 클래스 메소드: 자바의 정적 메소드와 같다.
+        // - this키워드는 클래스 메소드에서 사용하지 않는다
+        // - 생성자함수.함수명=function(){}
+        // - 생성자함수. 함수명으로 호출
+        Human.inform = function(legs, arms){
+            console.log(this); //f Human(username, years){...}
+            console.log(this.username); //undefined
+            console.log('인류는 포유류다. 다리는 %s개 팔은 %s개이다.', legs, arms);
+        };
+
+        //Human 인스턴스화 (객체화)
+        var human = new Human('나길동', 30);
+        console.log(human); //Human {username: '나길동', years: 30, birthday: Wed May 08 2024 10:43:41 GMT+0900 (한국 표준시)}
+        console.log(typeof human); //object
+        console.log(JSON.stringify(human)); //{"username":"나길동","years":30,"birthday":"2024-05-08T01:44:23.323Z"}
+        
+        //속성 값 읽기
+        console.log(human.username);
+        console.log(human['years']);
+        //함수 호출
+        human.print(); //왜 이건 human이고
+        Human.inform(2, 2); //왜 이건 Human인거야? > 자바의 정적 메소드와 같아서 얘는 인스턴스 머시기로 호출하지 않고 클래스명 그대로
+
+        var human_ = new Human('다길동', 40);
+        human_.print();
+        //나이 수정
+        human_.years = 20;
+
+        //instanceof 연산자: 해당 객체가 어떤 생성자 함수 타입인지 알아내는 연산자.
+        //변수(객체명) instanceof 생성자함수명
+        //자스의 모든 객체는 Object로부터 상속 받았다
+        var array = new Array(10);
+        console.log(array instanceof Array); //true
+        console.log(array instanceof Object); //true
+        console.log(array instanceof String); //false
+
+        // [자바스크립트에셔의 객체 상속하기]
+        // Human을 상속 받자 즉 Human을 상속받은 Asian 생성자 함수를 만들자
+
+        // 1. 부모(Human)의 "모든 속성" 상속받기: 부모 생성자함수(Human).apply(this, arguments);
+        
+        //부모와 인자 동일해야 함 ?
+        function Asian(username, years, race){ //매개변수 username, years는 부모와 일치시키자
+            //부모 생성자의 this와 arguments(매개변수)를 적용한다(상속받겠다)는 의미
+            //자바의 super(username, years)와 동일하다
+            console.log('Asian 생성자 함수의 this: ', this);
+            Human.apply(this, arguments); //arguments: Human의 인자를 다 적용하겠다는 의미, this: 부모 생성자의 this(Human)
+            //Asian에서 Human의 인자와 this를 모두 상속받음
+            this.race = race; //자식에서 race속성 추가
+        };
+
+        // 2. 부모의 "메소드" 상속받기 Object.create(부모 생성자함수(Human).prototype);
+        Asian.prototype = Object.create(Human.prototype); //부모의 prototype(함수)를 다 받기
+        // 아래 생략시 Asian.prototype.constructor === Human이 true가 돼버림
+        // 즉, Asian의 생성자 함수는 Human이라는 의미 > 그래서 Asian으로 적용해줘야 함 ?
+        Asian.prototype.constructor = Asian;
+        // Asian에 새로운 함수 추가
+        Asian.prototype.farm = function(){
+            console.log('생일이 %s이고 %s살인 %s가 농사를 짓는다.', this.birthday, this.years, this.username);
+        };
+        // 정적메소드는 상속이 안된다...
+        var asian = new Asian('라길동', 10, '황인종');
+        console.log(asian);
+        console.log(asian instanceof Asian); //true
+        console.log(asian instanceof Human); //true
+        console.log(asian instanceof Object); //true
+        console.log(Asian.prototype.constructor === Human); //false
+        asian.farm();
+        asian.print(); //오버라이딩 전 - 인종이 출력안됨
+        //오버라이딩:상속받은 부모의 메소드를 재정의.
+        //오버라이딩이라는 개념은 존재하나
+        // 단, 매개변수와 반환값이 일치하지 않아도 된다(메소드명은 동일하게)
+        Asian.prototype.print = function(language){
+            console.log('이름: %s, 나이: %s, 생일: %s, 인종: %s, 언어: %s', this.username, this.years, this.birthday, this.race, language);
+        };
+
+        //오버라이딩한 후 함수 호출
+        asian.print('한국어');
+        console.log(asian.toString()); //[object Object]: 주소
+
+        //Object의 toString() 오버라이딩
+        Asian.prototype.toString = function(){
+            return "이름: " + this.username + ", 나이: " + this.years + ", 인종: " + this.race;
+        };
+        console.log(asian.toString()); //이름: 라길동, 나이: 10, 인종: 황인종
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

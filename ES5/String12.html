@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String12.html</title>
+    <script>
+        var str1="안녕 자바스크립트!";//문자열 리터럴로 string객체 생성
+        var str2="Hello JavaScript!";
+        var str3='Hi JS!';
+        var str4 = new String('Hi JS!');//new 생성자함수()로 string객체 생성
+
+        console.log(typeof str1, typeof str4); //string object
+        console.log(str1 instanceof String); //false
+        console.log(str4 instanceof String); //true
+        console.log('%O', str1); //안녕 자바스크립트!
+        console.log('%O', str4); // ▶ String
+
+        //인덱스로 접근해서 문자열을 구성하는 하나의 문자를 추출가능.
+        //자바는 char[] String객체.toCharArray()호출후 가능
+        //인덱스를 키로해서 문자열이 저장 되어있다(배열처럼)즉 유사 배열이다
+        /*
+        ※String객체는 문자 하나 하나가 배열형태 처럼로 저장됨.
+        예]var str="AB가C";
+        str[0]="A"
+        str[1]="B"
+        str[2]="가"
+        str[3]="C" 형태로 저장됨.
+
+        var str="AB가C"; 는  1]그리고 2]처럼 접근할수 있다 즉 유사배열이다
+
+        //1]
+        var str= new Array(4);
+        str[0]="A"
+        str[1]="B"
+        str[2]="가"
+        str[3]="C"
+
+        //2]
+        var str = ["A","B","가","C"];
+        */
+        console.log(str1[0]); //안
+        Array.from(str1).forEach(function(item, index){
+            console.log('%d번째 요소: %s', index, item);
+        });
+        //1] 문자열의 길이 얻기 - length 속성
+        console.log('str1의 길이: ', str1.length); //10
+        console.log('str4의 길이: ', str4.length); //6
+
+        //2] 문자열 객체의 함수를 이용해서 텍스트 꾸미기
+        document.write('<h2>함수로 텍스트 꾸미기</h2>');
+        console.log('볼드체(함수): ', str1.bold()); //<b>안녕 자바스크립트!</b>
+        document.write('볼드체(함수): ', str1.bold());
+        document.write('<br/>볼드체(태그): , <b>' + str1 + '</b>');
+        document.write('<br/>이탤릭체(함수): ', str1.italics());
+        document.write(`<br/>이탤릭체(태그): <i>${str1}.italics()</i>`); //`를 사용하면 안에 변수를 넣을 수 있다 ?
+        document.write('<br/>가운데선 긋기(함수): ', str1.strike());
+        document.write(`<br/>이탤릭체(태그): <strike>${str1}.strike()</strike>`);
+
+        var url = "https://www.nate.com";
+        document.write(`<br/>링크걸기(함수): ${str1.link(url)}`);
+        document.write(`<br/>링크걸기(태그): <a href = "${url}">${str1}</a>`);
+
+        //3] 대소문자로 변경
+        console.log('대문자로 변경: ', str2.toUpperCase());
+        console.log('소문자로 변경: ', str2.toLowerCase());
+
+        //4] 특정 위치(인덱스)의 하나의 문자 얻어오기
+        //charAt(인덱스): 인덱스는 0부터 시작
+        console.log(str3.charAt(3));
+        console.log('자바스크립트'.charAt(3));
+
+        //5] 문자열에서 특정 문자열 얻어오기 substring(시작인덱스, 끝인덱스): 끝인덱스 -1
+        console.log('ACADEMY'.substring(3, 7));
+        //5-1] 문자열에서 특정 문자열 얻어오기2 - substr(시작인덱스, 문자열개수)
+        console.log('ACADEMY'.substr(3, 4));
+
+        //6] 특정 위치의 아스키 코드값 가져오기 charCodeAt(인덱스): 자바에서는 codePointAt(int index)
+        console.log('ACADEMY'.charCodeAt(3)); //68
+        console.log('ACADEMY'.codePointAt(3)); //68
+
+        //7] 특정 코드값을 문자로 변환(클래스 메소드): String.fromCharCode(코드값)
+        console.log(String.fromCharCode(68)); //D
+
+        //8] 구분자로 문자열 분리 - 배열 반환
+        //split(구분자[정규표현식][, limit])
+        //만약 해당 구분자가 없으면 무조건 배열크기가 1인 배열에 문자열 전체가 저장됨
+        var tel = '010.1234.5678';
+        console.log(tel.split('.')); // ▶ (3) ['010', '1234', '5678'] 
+        // .을 구분자로 사용(정규표현식 임의의 한 문자가 아닌). 즉,자바처럼 정규
+        console.log(tel.split('.', 2));
+        console.log(tel.split(/./g, 2)); //이때 2는 임의의 한 문자(정규표현식)
+        console.log(tel.split(/./g)); //(14) ['', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        console.log(tel.split(/\./g)); //(3) ['010', '1234', '5678'] // .은 임의의 한문자가 아니고 구분자
+
+        //9] 특정 문자열의 인덱스값 알아내기
+        //indexOf("찾는 문자열"): 찾는 문자열이 존재하면 찾는 문자열의 시작인덱스값 반환
+        //                         존재하지 않으면 -1 반환
+        console.log('ACADEMY'.indexOf('A'));
+        console.log('ACADEMY'.indexOf('CAD'));
+        console.log('ACADEMY'.indexOf('Cad'));
+        //9-1] 특정 문자열의 인덱스값 알아내기2
+        //  lastIndexOf("문자열"): 반환값은 indexOf()와 동일
+        console.log('ACADEMY'.lastIndexOf('A'));
+        console.log('ACADEMY'.lastIndexOf('CAD'));
+        console.log('ACADEMY'.lastIndexOf('Cad'));
+
+        //10] 양쪽 공백 제거: trim()
+        console.log('X' + '       H     E  Y');
+        console.log('X' + '       H     E  Y'.trim());
+
+        /* 
+        자스에서 비교시
+        1.숫자와 숫자형식의 문자열 =>숫자형식의 문자열이 숫자로 변환
+        '100' >= 99 : 100 >= 99 :true
+
+        2.숫자형식 문자열 과 숫자형식 문자열 => 문자열 비교할때 처럼 한자씩
+        차례로 코드값 비교
+        '100' >='99' :문자열 비교 :false
+
+        3.숫자형식이 아닌 문자열과 숫자 :무조건 false
+        '가' > 99 : false
+        '가' > '99' : true
+        */
+
+        /* 
+            문]
+            문자열을 매개변수로 받는 함수로,
+            받은 인자가 숫자형식이 아니면 false반환
+            숫자형식이면 true를 반환하는 함수를 정의해라.
+            그리고 호출해서 결과 확인해라...
+            "12A"->false  ,"가100"->false, "99"->true       
+        */
+
+        function isNumber(val){
+            for(var i = 0; i < val.length; i++){
+                var tmp = val.charAt(i)
+                if(!('0' <= tmp && '9' >= tmp)) return false;
+            }
+            return true;
+        }
+        console.log(isNumber('12142dfg4'));
+
+        var isNumber = function(str){
+            //방법1] 자스함수(String객체의 함수) 미사용
+            //위의 3번 숫자와 문자열 비교 (모든 하나의 숫자는 0과 9사이다)
+            /* 
+            for(var i = 0; i < str.length; i++){
+                if(!(str[i] >= 0 && str[i] <= 9)) return false;
+            } */
+
+            //방법2] 자스 함수 사용
+            /* 
+            for(var i = 0; i < str.length; i++){
+                if(str[i].charCodeAt(0) >= '0'.charCodeAt(0) && str[i].charCodeAt(0) <= '9'.charCodeAt(0)) return false;
+            } */
+            
+            //방법3] 자스 함수 사용
+            for(var i = 0; i < str.length; i++){
+                if(0 <= str.charAt(i) && str.charAt(i) <= 9) return false;
+            }
+            return true;
+        }
+        console.log(isNumber('12A'));
+        console.log(isNumber('가12A'));
+        console.log(isNumber('12'));
+        
+        
+        
+        
+        
+        
+        
+        
+        var emails=['kim@naver.com','park@cyworld.com','lee@nate.com'];
+
+        /* 
+        문]배열을 매개변수로 받아서 가운데 도메인만 얻어서
+           출력하는 함수를 정의하고 함수를 호출하자. */
+
+        var getEmail = function(email){
+            for(var i = 0; i < email.length; i++){
+                var temp = email[i].split(/\@/g)[1].split(/\./g)[0];
+                console.log(temp);
+            }
+        }
+        getEmail(emails);
+
+        function print(emails){
+            //emails.forEach(element => console.log(element.substring(element.indexOf('@') +1, element.lastIndexOf("."))));
+            //정규표현식으로
+            emails.forEach(element => console.log(element.match(/\w+@(\w+)\.\w+/)[1])); //g적용 한하면 pattern객체의 exec와 같다?
+            console.log();
+        }
+        print(emails);
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

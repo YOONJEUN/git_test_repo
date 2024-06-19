@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM09_3.html</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            var ul = document.querySelector('ul');
+            var buttonUp = document.querySelector('.up');
+            var buttonDown = document.querySelector('.down');
+
+            var li = null; //클릭한 li를 담는 변수
+            //li의 부모인 ul에 이벤트 바인딩 (리스너 부착)
+            ul.onclick = function(e){
+                console.log(e.target.nodeName); //e.target: 클릭 이벤트가 발생한 대상 (ul)
+                if(e.target.nodeName === 'LI'){
+                    if(li != null) li.style.backgroundColor = 'white'; //if(li != null) < 이게 어떤 경우인지 좀 헷갈림
+                    //클릭한 li의 배경색 설정
+                    e.target.style.backgroundColor = '#FA998A';
+                    //변수 li를 클릭한 li로 변경
+                    li = e.target;
+                }
+            };
+            buttonUp.onclick = function(e){
+                if(li === null){
+                    alert('메뉴를 클릭하세요.');
+                    return;
+                }
+                var previous = li.previousElementSibling;
+                console.log(previous);
+                if(previous === null){
+                    alert('이전 메뉴가 없습니다.');
+                    return;
+                }
+                li.insertAdjacentElement('afterend', previous); //previous를 기존 것 afterend에 위치시키겠다
+                //previous.insertAdjacentElement('beforebegin', li); //위와 동일
+            };
+            buttonDown.onclick = function(e){
+                if(li === null){
+                    alert('메뉴를 클릭하세요.');
+                    return;
+                }
+                var next = li.nextElementSibling;
+                console.log(next);
+                if(next === null){
+                    alert('이전 메뉴가 없습니다.');
+                    return;
+                }
+                li.insertAdjacentElement('beforebegin', next);
+            };
+        });
+    </script>
+</head>
+<body>
+    <h2>DOM API 사용하기:노드의 위치 바꾸기</h2>
+    <fieldset style="width:60%">
+        <legend>메뉴 위치 변경하기</legend>
+        <ul>
+            <li>메뉴1</li>
+            <li>메뉴2</li>
+            <li>메뉴3</li>
+            <li>메뉴4</li>
+            <li>메뉴5</li>
+            <li>메뉴6</li>
+        </ul>
+        <button class="up">위로</button>
+        <button class="down">아래로</button>
+    </fieldset>
+
+
+
+
+
+
+
+
+</body>
+</html>

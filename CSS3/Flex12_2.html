@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex12_2.html</title>
+    <style>
+        .container1{
+            /* 일 때 각 아이템의 flex-grow: 0; flex-shrink: 1; flex-basis: auto;이 기본값이다 */
+            display: flex;
+            background-color: yellow;
+        }
+
+        .item, .item-1, .item-2{
+            border: 2px green solid;
+            box-sizing: border-box;
+
+            
+            /*
+            ※flex-basis:아이템의 기본 크기를 설정(아이템 확장/축소시의 기준 크기)
+            -아이템 크기
+                아이템의 크기를 지정시 flex-basis나 width속성(모든 요소의 기본 CSS속성)으로 지정할 수 있다
+                ※flex-basis의 값에 따라 width속성의 값이 적용되기도 하고 무시되기도 한다
+                flex-basis:auto일때는 width지정시 width의 값이 flex-basis값이 되고
+                                      width 미 지정시에는 컨텐츠 크기가 자동으로 flex-basis값이 된다
+                flex-basis:특정값(예:flex-basis:200px)일때 width속성이 무시된다
+                flex-basis:0일때 컨텐츠 크기만큼 영역이 만들어진다.이때도 width속성은 무시된다
+
+            -아이템의 축소
+                아이템에 지정한 width는 아이템의 영역 크기가 된다.
+                basis값 <= width값 : basis값으로 아이템의 시각적 크기가 결정된다(width값은 무시된다)
+                                    shrink역시 적용이 안된다
+                basis값 > width값 : basis값으로 아이템의 시각적 크기가 결정된다(width값은 무시된다)
+                                    shrink가 적용된다(width값까지 줄어든다)
+
+                ※배치시 컨테이너의 크기를 줄여도 축소되면 안되는 아이템 컨텐츠가
+                  있으면 width속성을 지정하자
+            */
+
+            /*1.flex-basis:auto 테스트(기본값) */
+            /* ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ */
+            /* flex-basis가 auto이고 width: 300px이면 브라우저를 줄여도 컨텐츠 크기가 고정 !!!!!!!!!!! */
+            /*width:300px;*//*300px이 flex-basis의 값이된다.단,축소는 안된다*/
+
+            /*2.flex-basis:특정값 테스트*/
+            /* flex-basis:150px; */
+            /*width:300px;*/ /* width는 무시된다.역시 축소는 안된다 (단, 아이템 전체가 아닌 일부만 width 지정 시에는 축소되다가 width크기가 되면 축소가 안된다 */
+
+            /*3.flex-basis:0 테스트*/
+            /*flex-basis: 0;*//*컨텐츠 크기만큼 영역이 만들어진다*/
+            /*width:200px;*//* width는 무시된다*/
+
+            /*
+            flex-basis:auto(width미지정하면 컨텐츠 크기만큼, 지정하면 그거만큼) 와 flex-basis:0(컨텐츠 크기만큼 줄어들기)의 차이
+            공통점: 컨텐츠 크기만큼 아이템의 영역이 만들어진다
+            차이점: auto는 width지정시 width의 값이 basis값이 되고
+                    0는 width지정시 width가 (아이템 크기가) 적용이 안된다 즉 width가 무시된다
+            */
+            
+            /* 아래 flex-basis의 값을 0 또는 auto로 변경하면서 차이를 확인하자 */
+            /*flex-basis: 0;*//*컨텐츠 크기만큼 아이템 영역이 생성된다*/
+            /*width:200px;*/ /*아이템크기에는 적용이 안된다 즉 무시된다*/
+
+            
+
+
+            /* flex-basis: 200px; */
+        }
+
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend><h2>Flex Item의 flex-basis속성</h2></legend>
+        <div class="container1">
+            <!-- basis값이 컨텐츠 크기만큼 (bais가 auto일때) -->
+            <div class="item">item1</div>
+            <div class="item">item2</div>
+            <!-- WIDTH지정해서 축소가 일어나지 않는다 basis값이 300px 근데 위에서 basis지정하면 width무시됨 -->
+            <div class="item" style="width:300px">item3</div>
+            
+            <div class="item">item3</div>
+            <!--
+            <div class="item">item4</div>
+            <div class="item">item5</div>
+            -->
+        </div>
+      </fieldset>
+      <hr/>
+      <fieldset>
+        <legend><h2>Flex Item의 flex-grow속성 및 flex-shrink속성</h2></legend>
+        <div class="container2">
+          <div class="item-1" >item1</div>
+          <div class="item-1" >item2</div>
+          <div class="item-1" >item3</div>
+          <div class="item-1" >item4</div>
+          <div class="item-1" >item5</div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><h2>Flex Item의 margin속성 적용하기</h2></legend>
+        <div class="container3">
+          <div class="item-2">item1</div>
+          <div class="item-2">item2</div>
+          <div class="item-2">item3</div>
+        </div>
+      </fieldset>
+</body>
+</html>

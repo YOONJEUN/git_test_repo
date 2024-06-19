@@ -1,0 +1,13 @@
+.content{
+    color: black;
+    width: 80%;
+    background-color: rgb(213, 243, 255);
+    margin: 0 auto;
+}
+
+.content > p{
+    width: 100%;
+    font-size: 1.5em;
+    border: 5px red solid;
+    box-sizing: border-box;
+}

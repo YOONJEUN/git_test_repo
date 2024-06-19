@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positioning23.html</title>
+    <!--https://developer.mozilla.org/ko/docs/Learn/JavaScript/First_steps/What_is_JavaScript-->
+    <!--
+    
+        14:00
+    
+    HTML태그 파싱 =====>파싱이 블락킹 된 후 positioning.js파일 다운(fetching)후  positioning.js를 실행====>
+    ======> HTML태그를 다시 파싱하여 DOM TREE생성
+    -->
+    <!-- 아래 오류 남 -->
+    <!-- <script src="js/position.js"></script> -->
+    <!-- 정상 작동 -->
+    <!-- <script src="js/position.js" defer></script> -->
+    
+    <!--
+    HTML태그 파싱하면서 병렬로 button.js파일 다운(fetching)====>
+    HTML태그 파싱이 끝난 후(DOM TREE생성) positioning.js를 실행
+    -->
+</head>
+<body>
+    <fieldset>
+        <legend>.js파일의 위치에 따른 DOM API사용</legend>
+        <button>버튼</button>
+    </fieldset>
+    <script src="js/position.js"></script>
+</body>
+</html>

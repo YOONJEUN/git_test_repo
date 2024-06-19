@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date14.html</title>
+    <script>
+        /*
+        Date객체는 var 변수명 =new Date();로 생성한다.
+        ※배열객체 var 배열명 = new Array();
+        ※Math객체 Math.함수명();
+        ※String객체는
+        방법1] var 변수명 = new String("문자열");
+        방법2] var 변수명 = "문자열";
+        혹은 직접 "문자열".함수()형식으로 사용가능
+        날짜 정보를 가져올때는 getXXX()시리즈로
+        날짜를 설정할때는 setXXX()시리즈로
+        */
+
+        //1] Date객체 얻기 방법1: new Date()
+        var today = new Date();
+        console.log('%O, 타입: %s', today, typeof today);
+
+        //2] Date객체 얻는 방법2: new Date(년[, 월, 일, 시, 분, 초, 1000분의 1초])
+        //월은 0~부터 11사이의 값
+        //년은 그대로 연도를 넣어준다
+        var date2 = new Date(2002, 5, 22, 18, 10, 50);
+        console.log(date2.getHours);
+        console.log('%s년 %s월 %s일 %s시 %s분 %s초', date2.getFullYear, 
+                                                    date2.getMonth + 1, 
+                                                    date2.getDay, 
+                                                    date2.getHours, 
+                                                    date2.getMinutes, 
+                                                    date2.getSeconds);
+
+        /* unction getFullYear() 
+        { [native code] }년 function getMonth() 
+        { [native code] }1월 function getDay() 
+        { [native code] }일 function getHours() 
+        { [native code] }시 function getMinutes() 
+        { [native code] }분 function getSeconds() 
+        { [native code] }초 >>>>>>>>>>>>>>>>>>결과 이상하잖아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ */ 
+
+
+
+
+        //2] setXXXX()함수로 날짜 변경
+        date2.setMonth(6);
+
+        //3] 요일 얻기: getDay() 0: 일요일, 1: 월요일, 2: 화요일 ...
+        switch (date2.getDay) {
+            case 0: console.log('일요일'); break;
+            case 1: console.log('월요일'); break;
+            case 2: console.log('화요일'); break;
+            case 3: console.log('수요일'); break;
+            case 4: console.log('목요일'); break;
+            case 5: console.log('금요일'); break;
+            default: console.log('토요일');
+        }
+
+        //4] 두 날짜 사이의 차이 구하기
+        //getTime(): 1970년 1월 1일 0시 0분 0초부터 특정일까지
+        //흘러온 시간을 1000분의 1초(miliseconds)단위로 반환
+        var endDate = new Date('2024-9-30');
+        var sTime = today.getTime();
+        var eTime = endDate.getTime();
+        console.log('수료일까지 남은 일 수: ', Math.ceil(Math.abs(sTime - eTime)/(1000*60*60*24)));
+        //Date.now(): 1970년 1월 1일 00:00:00 UTC로부터 현재까지 흘러온 시간을 밀리초단위의 숫자값으로 반환
+        console.log(Date.now());
+        //Date.parse(): 날짜형식의 문자열을 날짜(Date타입)로 변환한 후
+        //해당 날짜와 1970년 1월 1일 00:00:00 UTC의 시간 차이를 밀리초 단위의 숫자 값으로 반환
+        console.log(Date.parse('1970-1-1')); //-32400000
+        console.log(Date.parse('1970-1-1') + 9*60*60*1000); //0 한국이 9시간 빠르니까
+        //1715309564925(에폭 밀리세컨드)를 숫자 년/월/일로 변환하기
+        //1. Date객체 생성
+        var temp = new Date();
+        //2. setTime()함수 사용 (자바와 동일)
+        temp.setTime(Date.now());
+        console.log(temp); // Fri May 10 2024 11:54:33 GMT+0900 (한국 표준시)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

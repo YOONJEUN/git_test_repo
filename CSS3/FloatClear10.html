@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloatClear10.html</title>
+</head>
+<body>
+    <fieldset>
+        <legend>float속성(div의 width미 지정)</legend>
+        <div style="background-color: red; float: left;">div1</div>
+        <div style="background-color: green; float: right;">div2</div>
+        <div style="background-color: blue; clear: left;">div3</div>
+    </fieldset>
+    <!-- div의 width미정시에는 나머지 여유 공간을 채운다 
+    단,width 지정시에는 자동으로 여유 공간을 채우지 않는다 
+    따라서 배치를 위해서는 반드시 float속성의 left/right로 배치하자.
+    그러면 남은 영역의 왼쪽/오른쪽등을 채우게 된다
+    -->
+
+    <fieldset>
+    <legend>float속성(div의 width 지정)</legend>
+    <div style="background-color: red; width: 100px; float: left;">div1</div>
+    <div style="background-color: green; width: 100px; float: right;">div2</div>
+    <div style="background-color: blue; width: 100px; float: left;">div3</div>
+    </fieldset>
+    <!--
+    height도 지정시에는 배치시에
+    모든 DIV에 float나 clear속성을 부여해라
+    그렇지 않으면 레이아웃이 깨진다
+    -->
+    <fieldset>
+        <legend>float속성(div의 width/height 지정)</legend>
+        <div style="background-color: red; width: 50px; height: 50px; float: left;">div1</div>
+        <div style="background-color: green; width: 50px; height: 50px; float:right">div2</div>
+        <div style="background-color: blue; width: 50px; height: 50px; clear: both;">div3</div>
+    </fieldset>
+    
+</body>
+</html>

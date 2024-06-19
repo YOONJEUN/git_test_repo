@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex12_3.html</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .allWrap{
+            /* 수평으로 가운데 정렬 */
+            display: flex;
+            justify-content: center;
+        }
+
+        .wrap{
+            width: 80%;
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: column; /* 주축을 블락 방향으로 */
+            align-items: center;
+            /* flex: 1; */
+        }
+
+        .header{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .header > .logo{
+            flex: none; /* 아이템 크기 고정. 즉, 로고이미지 확대/축소 불가하게 */
+            width: 100px;
+        }
+
+        .logo > img{
+            width: 100%;
+        }
+        
+        .header > .topMenu{
+            /* 수직으로 가운데 배치하기 위한 flex속성 (align-items) 사용하기 위함 */
+            display: flex;
+            align-items: center;
+        }
+        .header > .topMenu > ul{
+            display: flex;
+            list-style: none;
+        }
+        .header > .topMenu > ul > li{
+            border-right: 1px gray solid;
+            padding: 0 5px;
+        }
+        .header > .topMenu > ul > li:last-child{
+            border: none;
+        }
+        
+        .content{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .aside{
+            flex: none;
+            width: 100px;
+        }
+
+        .aside > ul{
+            list-style: none;
+            margin: 10px 0 0 10px;
+        }
+
+        .aside > ul > li{
+            margin-bottom: 5px;
+        }
+
+        .between{
+            flex: none;
+            width: 50px;
+        }
+
+        .main{
+            flex-grow: 1;
+            padding: 10px 0 0 10px;
+        }
+
+        .footer > address{
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+    <div class="allWrap" style="background-color: rgb(197, 251, 255);">
+        <div class="wrap" style="background-color: yellow;">
+            <div class="header">
+                <div class="logo"><img src="../images/footer_logo_20230821.webp" alt="회사 로고 이미지"/></div>
+
+                <div class="topMenu">
+                    <ul>
+                        <li>홈</li>
+                        <li>로그인</li>
+                        <li>회원가입</li>
+                        <li>공지사항</li>
+                        <li>자주묻은질문</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                <div class="aside">
+                    <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                    <li>서브메뉴5</li>
+                    </ul>
+                </div>
+                <div class="main">
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                        <h2>실제 내용이 들어갑니다</h2>
+                </div>
+            </div>
+            <div class="footer">
+                <address>서울시 서초구 서초동 한국ICT 인재개발원</address>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM09_4.html</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            var dummy = [
+                {no:2, title:"제목2", postDate:"2022-01-01", writer:"김길동1", hit:10},
+                {no:3, title:"제목 입니다", postDate:"2022-02-03", writer:"박길동2", hit:5},
+                {no:4, title:"내일 공약사항을 발표하겠습니다", postDate:"2022-05-03", writer:"박길동3", hit:15},
+                {no:5, title:"축하드립니다", postDate:"2022-11-15", writer:"박길동4", hit:25},
+            ];
+            //서버에서 데이타만 받는다고 가정하고
+            //tr노드 생성후 생성된 각 노드를 추가하여 구현하지 않고
+            //cloneNode()를 사용해 기존 노드 tr를 복제하여 구현하자
+            //기존 노드가 없는 경우는 template 사용하자
+            var tbodys = document.querySelectorAll('tbody');
+            var btnDatas = document.querySelectorAll('.btnData');
+            //복제할 행 얻기
+            var existTr = tbodys[0].querySelector('tr'); //tbody[0].firstElementChild
+            btnDatas[0].onclick = function(){
+                dummy.forEach(item => {
+                    //기존 tr 복제: true이면 깊게 복제 즉, 해당 요소뿐만 아니라 자식까지 모두 복제
+                    var cloneTr = existTr.cloneNode(true);
+                    //복제한 cloneTr에서 td들 얻고 배열의 데이터로 변경
+                    var tds = cloneTr.querySelectorAll('td'); //유사배열이니 index로 접근
+                    tds[0].textContent = item.no;
+                    tds[1].textContent = item['title'];
+                    tds[2].textContent = item.postDate;
+                    tds[3].textContent = item.writer;
+                    tds[4].textContent = item.hit;
+                    //복제한 tr노드를 기존 행 다음에 붙인다
+
+                    existTr.insertAdjacentElement('afterend', cloneTr); //왜 역순이야 처음엔?
+                    //기존 existTr을 cloneTr로 변경 - 역순이 아닌 순서대로
+                    //existTr = cloneTr;
+
+                });
+            };
+
+            //복제할 행이 없는 경우
+            var template = document.querySelector('template');
+            console.log(template);
+            console.log('%O', template); //[[Prototype]]: HTMLTemplateElement
+            //template요소의 하위요소들을 가져올때는 content속성으로
+            console.log(template.content);
+            btnDatas[1].onclick = function(){
+                dummy.forEach(function(item){
+                    //importNode():
+                    //브라우저에 보이는 현재 DOM이 아닌 외부 DOM의 노드를 복사하여 현재 DOM에 넣을 수 있도록 해줍니다.
+                    //여기서 외부 DOM이란 예를들면 iframe을 구성하는 문서의 노드 혹은 template태그로 구성한 노드
+                    //외부 DOM을 가져올 땐 importNode
+                    var cloneTr = document.importNode(template.content, true); //외부의 노드를 import 하겠다
+                    var tds = cloneTr.querySelectorAll('td');
+                    tds[0].textContent = item.no;
+                    tds[1].textContent = item['title'];
+                    tds[2].textContent = item.postDate;
+                    tds[3].textContent = item.writer;
+                    tds[4].textContent = item.hit;
+
+                    tbodys[1].append(cloneTr);
+                });
+            };
+
+
+
+
+
+
+        });
+    </script>
+</head>
+<body>
+    <h2>DOM API 사용하기:노드복제 하기</h2>
+    <fieldset>
+        <legend>데이타 뿌려주기(복제할 행이 있는 경우)</legend>
+        <input type="button" class="btnData" value="데이타 넣기" />
+        <hr/>
+        <table style="text-align:center;background-color: black;border-spacing:1px;width:70%">
+            <thead>
+                <tr style="background-color: white;">
+                    <th style="width:5%">번호</th>
+                    <th>제목</th>
+                    <th style="width:15%">작성일</th>
+                    <th style="width:15%">작성자</th>
+                    <th style="width:8%">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: white;">
+                    <td>1</td>
+                    <td style="text-align:left">제목1</td>
+                    <td>2022-09-01</td>
+                    <td>가길동</td>
+                    <td>20</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>데이타 뿌려주기(복제할 행이 없는 경우)</legend>
+        <input type="button" class="btnData" value="데이타 넣기" />
+        <hr/>
+        <!-- template 태그의 하위요소는 DOM트리로 구성이 안된다. 즉, 브라우저에 보이지 않는다
+            브라우저에 보이는 현재 문서의 DOM의 구성요소가 아니다
+        -->
+        <template>
+            <tr style="background-color: white;">
+                <td>1</td>
+                <td style="text-align:left">제목1</td>
+                <td>2022-09-01</td>
+                <td>가길동</td>
+                <td>20</td>
+            </tr>
+        </template>
+        <table style="text-align:center;background-color: black;border-spacing:1px;width:70%">
+            <thead>
+                <tr style="background-color: white;">
+                    <th style="width:5%">번호</th>
+                    <th>제목</th>
+                    <th style="width:15%">작성일</th>
+                    <th style="width:15%">작성자</th>
+                    <th style="width:8%">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>

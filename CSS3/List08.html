@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List08.html</title>
+    <style>
+        ul.sport{
+            border: 5px red solid;
+            box-sizing: border-box; 
+            /* 불릿은 li 영역 밖에 위치하게 되는데 아래 속성을 통해 불릿이 li 영역 내부로 이동 */
+            list-style-position: inside;
+
+        }
+
+        ul.sport > li{
+            border: 2px green solid;
+            box-sizing: border-box; 
+        }
+
+        /* 아이콘 크기 그대로 불릿이 적용된다 
+        ul.image{
+            list-style-image: url(../images/arrow_icon.png);
+        } */
+        ul.image > li{
+            display: flex;
+            height: 48px;
+            align-items: center;
+        }
+
+        ul.image > li > div.icon{
+            width: 48px;
+            height: 48px;
+            background-image: url(../images/arrow_icon.png);
+        }
+
+        ul.inline1 > li{
+            /* li를 인라인으로 만들면 불릿이 제거된다. li태그에 설정 */
+            display: inline;
+            border: 1px red solid;
+            box-sizing: border-box;
+            /* ※ 인라인 엘리먼트는 width, height 적용이 안됨. 즉, 아래 적용 안됨 */
+            width: 100px;
+            height: 100px;
+        }
+
+        ul.inline2{
+            /* 불릿만 제거된다. */
+            list-style: none;
+        }
+
+        ul.inline2 > li{
+            /* 가로배치인 블락 엘리먼트임 (블락인거 확인하는 방법: width나 height 부여해보고 먹으면 블락. 아니면 인라인) */
+            /* 가로배치는 됐지만 블락 엘리먼트의 성질은 그대로 유지 */
+            float: left;
+            border: 1px red solid;
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        ul.inline3 > li{
+            display:inline-block;
+            border: 1px red solid;
+            box-sizing: border-box;
+            /* 가로배치는 됐지만 블락 엘리먼트의 성질은 그대로 유지 */
+            width:100px;
+            height:100px;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        /* 방법2와 같다 */
+        ul.inline4{
+            list-style: none;
+            display: flex;
+        }
+
+        ul.inline4 > li{
+            display:inline-block;
+            border: 1px red solid;
+            box-sizing: border-box;
+            /* 가로배치는 됐지만 블락 엘리먼트의 성질은 그대로 유지 */
+            width:100px;
+            height:100px;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        /* inline 234의 차이 잘 구분 못하겠음 나중에 복습 */
+        
+
+        ul.bullet{
+            list-style: none;
+            border: 1px red solid;
+            box-sizing: border-box;
+            /* 패딩은 음수값이 적용 안된다 */
+            /* padding-left: 0; */
+        }
+
+        ul.bullet > li{
+            list-style: none;
+            border: 1px green solid;
+            /* 마진은 음수값이 가능. 부모영역도 뚫고 나감 */
+            margin-left: -50px;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>목록관련 CSS속성</h2>
+    <div>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?</legend>
+            <ul class="sport">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?</legend>
+            <ul class="image">
+                <li><div class="icon"></div><div>축구</div></li>
+                <li><div class="icon"></div><div>배구</div></li>
+                <li><div class="icon"></div><div>야구</div></li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?(li를 인라인으로)[방법1]</legend>
+            <ul class="inline1">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?(li를 인라인으로)[방법2]</legend>
+            <ul class="inline2">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?(li를 인라인으로)[방법3]</legend>
+            <ul class="inline3">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>당신이 좋아하는 스포츠는?(li를 인라인으로)[방법4]</legend>
+            <ul class="inline4">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend>당신이 좋아하는 스포츠는?(블릿만 제거)</legend>
+            <ul class="bullet">
+                <li>축구</li>
+                <li>배구</li>
+                <li>야구</li>
+            </ul>
+        </fieldset>
+        <style>
+            div > fieldset:last-child > ul > li{
+                display: inline;
+                border-right: 1px grey solid;
+                padding-right: 5px;
+            }
+
+            a{
+                text-decoration: none;
+                color: black;
+            }
+
+            a:hover{
+                text-decoration: underline;
+            }
+
+            div > fieldset:last-child > ul > li:last-child{
+                border: none;
+            }
+        </style>
+        <fieldset>
+            <legend>UL을 메뉴로 구현</legend>
+            <ul>
+                <li><a href="https://www.nate.com">회원가입</a></li>
+                <li>공지사항</li>
+                <li>로그인</li>
+                <li>게시판</li>
+            </ul>
+        </fieldset>
+    </div>
+</body>
+</html>

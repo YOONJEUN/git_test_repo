@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector01_2.html</title>
+    <style>
+        /* 태그 선택자 */
+        h1{
+            color: green;
+        }
+
+        input{
+            /* 입력 글자 스타일 변경 */
+            color: green; 
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        /* 속성 선택자: 선택자[속성] */
+        h1[title]{ /* title 속성이 있는 h1태그 선택 */
+            border: 1px red solid;
+        }
+
+        /* 속성 값은 "이나 '으로 감싸거나 특수 문자가
+        포함되지 않은 경우는 감싸지 않아도 된다 */
+        input[type=text]{
+            color: #ff0000;
+        }
+
+        /* input 태그 중 type속성이 checkbox인 요소 중 체크된 요소 선택 */
+        input[type=checkbox]:checked{
+            width: 30px;
+            height: 30px;
+        }
+
+        /* 속성에 정규 표현식 사용 */
+        a[href*='na']{ /* *은 포함됨의 의미 */
+            /* [href*='na']: href 속성값에 na가 포함된 */
+            color: #c5a16c;
+            font-size: 1.4em;
+        }
+        a[href$='net']{ /* $는 끝나는 의미 */
+            color: #cc55ff;
+        }
+        a[href^='http']{ /* ^는 시작의 의미 */
+            color: #55fff6;
+        }
+        
+        /* 동위(+,~) 선택자 */
+        h3~div{ /* h3의 동생들인 div */
+            color: rgb(216, 57, 57);
+        }
+
+        h3+div{ /* h3 바로 밑의 동생인 div */
+            color: #2d21ce;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>title속성이 없는 h1태그</h1>
+    <h1 title="제목 태그입니다">title속성이 있는 h1태그</h1>
+    <form>
+        이름:<input type="text" /><br />
+        아이디:<input type="text" /><br />
+        비밀번호:<input type="password" /><br />
+        전화번호:<input type="tel" /><br />
+        남자:<input type="checkbox" checked/><br />
+        여자:<input type="checkbox" />
+    </form>
+
+    <h2>정규 표현식 사용</h2>
+    <a href="http://www.naver.com">네이버</a><br />
+    <a href="http://www.daum.net">다음</a><br />
+    <a href="www.nate.com">네이트</a>
+    <div>div0</div>
+
+    <h3 id="title">동위(+,~) 선택자</h3>
+    <div>div1</div>
+    <div>div2</div>
+    <fieldset>
+        <div>div3</div>
+    </fieldset>
+    <div>div4</div>
+    <div>div5</div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventBubbling16.html</title>
+    <style>
+        .small{
+            width:100px;
+            height:100px;
+        }
+        .big{
+            width:100%;
+            height:300px
+        }
+        .deco{
+            border:  5px gray solid;
+            box-sizing: border-box;
+            border-radius: 5px;
+
+        }
+
+    </style>
+    <script>
+        //이벤트 캡처링 및 버블링 테스트
+        //이벤트 버블링:이벤트가 부모로 전파되는 방식.기본 방식이다
+        //이벤트 캡처링 방식을 사용하려면 addEventListener("이벤트명", 콜백함수, useCapture);
+        //useCapture를  true 로 설정하면 해당 객체에는 이벤트 캡처링방식으로 이벤트가 전파된다
+        //즉 이벤트 버블링과 캡처링은 조상-자손 관계를 가진 두 개의 요소가 동일한
+        //이벤트에 대한 리스너를 가지고 있을 때, 두 요소에 이벤트가 전파되는 방법을 말한다.
+        //이벤트 전파 모드에 따라 두 요소 중 이벤트를 먼저 수신하는 쪽이 달라진다
+        //https://www.w3.org/TR/DOM-Level-3-Events/#event-flow
+        //버블링 및 캡처링 테스트
+
+        //캡처링: td를 클릭해도 최상위 객체인 window에서 클릭이 돼서 아래로 내려오며 td가 클릭되는 것
+        //기본이 버블링 
+
+        //캡처링
+        window.addEventListener('DOMContentLoaded', function(){
+            /* 
+            var bodyNode = document.querySelector('body');
+            var fieldsetNode = document.querySelector('fieldset');
+            var imgNode = document.querySelector('img');
+
+            window.addEventListener('click', () => console.log('window에 클릭 이벤트 발생'), true);
+            document.addEventListener('click', () => console.log('Document에 클릭 이벤트 발생'), true);
+            bodyNode.addEventListener('click', () => console.log('body에 클릭 이벤트 발생'), true);
+            fieldsetNode.addEventListener('click', () => console.log('fieldset에 클릭 이벤트 발생'), true); //이건true줘서 버블링 발생x 캡처링
+            imgNode.addEventListener('click', () => console.log('img에 클릭 이벤트 발생'), true);
+            */
+            /* 
+            버블링
+            img에 클릭 이벤트 발생
+            fieldset에 클릭 이벤트 발생
+            body에 클릭 이벤트 발생
+            Document에 클릭 이벤트 발생
+            window에 클릭 이벤트 발생
+
+            캡처링
+            window에 클릭 이벤트 발생
+            Document에 클릭 이벤트 발생
+            body에 클릭 이벤트 발생
+            fieldset에 클릭 이벤트 발생
+            img에 클릭 이벤트 발생
+            */
+            //16:24 이벤트 버블링을 쓰는 이유
+            //이벤트 버블링 미 적용시: 순회하면서 모든 img요소에 click이벤트 리스너 부착. 비효율적이다
+            //이벤트 버블링 적용시: 모든 이미지요소에 바인딩할 필요 없다
+            //                      부모 요소에 이벤트를 한번만 바인딩하면 된다
+             
+            var big = document.querySelector('.big');
+            /*
+            //이벤트 버블링 미 적용시
+            var small = document.querySelectorAll('.small');
+            //순회하면서 모든 이미지에 click 이벤트 부착
+            small.forEach(function(img){
+                //img에 클릭 걸어주기
+                img.onclick = function(){
+                    big.src = img.src;
+                }
+            }); */
+
+            
+            //이벤트 버블링 적용시
+            var fieldsetNode = document.querySelector('fieldset');
+            fieldsetNode.onclick = function(e){
+                console.log(e.target); //이벤트가 발생한 객체
+                console.log(e.currentTarget); //리스너가 부착된 객체
+                console.log(e.target.nodeName); //대문자 태그명
+                console.log(e.target.className); //클래스 목록을 문자열로
+                if(e.target.nodeName !== 'IMG' || e.target.className.indexOf('small') === -1 ) return;
+                big.src = e.target.src;
+            };
+
+            //버블링을 막아야 되는 경우:
+            //요소들이 같은 부모를 공유하지만 이벤트시 처리할 일이 다른 경우
+            //즉 버튼클릭시는 DIV의 배경색을 변경하고
+            //SPAN 클릭시는 SPAN을 버튼으로 다시 버튼을 SPAN으로 변경하는 이벤트 처리를 하는 경우
+            //SPAN클릭시 부모인 FIELDSET에도 불필요하게 클릭 이벤트가 전달된다.
+            var fieldset2 = document.querySelector('fieldset:nth-child(2)');
+            var div = fieldset2.querySelector('.target');
+            var span = fieldset2.querySelector('span');
+            //버튼 클릭시 div의 배경색을 버튼의 텍스트로 변경
+            fieldset2.onclick = function(e){
+                console.log('fieldset 두번째에 클릭 이벤트 발생');
+                if(e.target.nodeName !== 'BUTTON') return;
+                div.style.backgroundColor = e.target.textContent;
+            }
+            
+            //같은 부모를 공유하지만 처리할 일이 다른 span요소
+            var toggle = false;
+            var span_ = span;
+            span.onclick = (e)=>{
+                e.stopPropagation(); //Propagation: 전파 > span에만 발생하도록(fieldset클릭 안 되도록)
+                //즉, span에만 클릭 이벤트 발생하여 불필요한 로직(필드셋의 클릭이벤트 로직)이 실행되지 않는다
+                console.log('span에 클릭 이벤트 발생');
+                var button = document.createElement('button');
+                button.textContent = e.target.textContent;
+                if(!toggle){
+                    button.onclick = e.target.onclick;
+                    e.target.replaceWith(button); //span을 버튼으로 변경
+
+                }
+                else e.target.replaceWith(span_);
+                toggle = !toggle;
+            };
+
+
+
+
+
+
+            
+
+        });
+
+    </script>
+</head>
+<body>
+    <fieldset style="background-color:yellow;" >
+        <legend>이벤트 버블링을 이용한 이벤트 처리</legend>
+        <img src="../Images/1.jpg" alt="풍경 첫번째" class="small">
+        <img src="../Images/2.jpg" alt="풍경 두번째" class="small">
+        <img src="../Images/3.jpg" alt="풍경 세번째" class="small">
+        <img src="../Images/4.jpg" alt="풍경 네번째" class="small deco">
+        <hr/>
+        <img src="../Images/1.jpg" alt="풍경 첫번째" class="big">
+    </fieldset>
+    <fieldset>
+        <legend>이벤트 버블링 막기 즉 부모로 전파되는 이벤트 막기</legend>
+        <button>#FF0000</button>
+        <button>#00FF00</button>
+        <button>#0000FF</button>
+        <button>#000000</button>
+        <span>REPLACE</span>
+        <hr/>
+        <div class="target" style="width:100px;height:100px;background-color:#000000;"></div>
+    </fieldset>
+</body>
+</html>

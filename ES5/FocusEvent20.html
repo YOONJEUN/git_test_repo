@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusEvent20.html</title>
+</head>
+<body>
+    <fieldset>
+        <legend>focus 및 blur이벤트</legend>
+        <input type="text" onfocusin="console.log('focusin:focus후 발생')" onfocus="console.log('focus:포커스를 얻었을때')" onblur="console.log('blur:포커스를 잃었을때')" onfocusout="console.log('foucsout:blur후 발생')" />
+    </fieldset>
+    <fieldset>
+        <legend>focus 및 blur이벤트 예제(HTML5의 속성 이용-IE에서만 적용됨)</legend>
+        아이디 <input type="text" placeholder="아이디" />
+        비밀번호 <input type="password" placeholder="비밀번호" />
+    </fieldset>
+    <fieldset>
+        <legend>focus 및 blur이벤트 예제(자바스크립트로 구현)</legend>
+        <!-- 
+        아이디 <input id ="id" type="text" value="아이디" style="color:lightgray" onfocus="fnfocus(this)" onblur="fnblur(this)"/>
+        비밀번호 <input type="text" value="비밀번호" id="txt" style="color:lightgray" onfocus="fnpwdfocus(this)" /><input type="password" id="pwd" onblur="fnpwdhidblur(this)" hidden  /> -->
+        아이디 <input id ="id" type="text" value="아이디" style="color:lightgray" onfocus="fnfocus(this)" onblur="fnblur(this)"/>
+        비밀번호 <input type="text" value="비밀번호" id="txt" style="color:lightgray" onfocus="fnpwdfocus(this)" /><input type="password" id="pwd" onblur="fnpwdhidblur(this)" hidden  />
+
+    </fieldset>
+    <script>
+        /*
+            focus:포커스 얻었을때.버블링이 안된다
+            focusin:focus발생후. 버블링이 ·된대
+            blur:포커스 잃었을때.버블링이 안된다
+            focusout:blur발생후.버블링 된다
+        */
+
+        var idNode = document.querySelector('fieldset:nth-child(3) > input[type=text]:nth-child(2)');
+
+        console.log(idNode);
+        idNode.onfocus = function(){
+            if(this.value === "아이디"){
+                this.value = "";
+                this.style.color = 'black';
+            }
+        };
+
+        idNode.onblur = function(){
+            if(this.value.trim().length === 0){
+                this.value = '아이디';
+                this.style.color = 'lightgray';
+            }
+        };
+
+        var pwdTextNode = document.querySelector('#txt');
+        var pwdPasswordNode = document.querySelector('#pwd');
+
+        //type="text"에는 onfocus 리스너 부착
+        pwdTextNode.onfocus = function(){
+            this.hidden = true;
+            pwdPasswordNode.hidden = false;
+            pwdPasswordNode.focus();
+        }
+
+        //type="password"에는 onblur 리스너 부착
+        pwdPasswordNode.onblur = function(){
+            if(this.value.trim() === ''){ //length해도 되고
+                this.hidden = true;
+                pwdTextNode.hidden = false;
+            }
+        };
+
+        
+
+
+
+
+
+        //내가 한 거
+        /* 
+        var pwd = document.querySelector('#txt');
+        var hidpwd = document.querySelector('#pwd');
+
+        function fnfocus(inputNode){
+            if(inputNode.value !== '아이디') return;
+            inputNode.value = "";
+            inputNode.style.color = 'black';
+        }
+        function fnblur(inputNode){
+            if(inputNode.value === ""){
+                inputNode.value = "아이디";
+                inputNode.style.color = 'lightgray';
+            }
+        }
+
+        function fnpwdfocus(inputNode){
+            if(inputNode.value !== '비밀번호') return;
+            inputNode.value = "";
+            
+            inputNode.hidden = true;
+            hidpwd.hidden = false;
+            hidpwd.focus();
+        }
+
+        function fnpwdhidblur(inputNode){
+            if(inputNode.value === ""){
+                pwd.hidden = false;
+                inputNode.hidden = true;
+                pwd.value = "비밀번호";
+            }
+        } */
+
+
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form13_1.html</title>
+</head>
+<body>
+    <!--
+        form태그: 사용자가 입력한 값 혹은 선택한 값을 서버로 전송할때 사용하는 태그
+
+        주요 속성:
+        action: 사용자가 입력한 값을 전송할 서버 상에 있는 페이지경로 지정
+                (action생략시 기본값은 자신의 페이지)
+        method: get/post(method 생략시 기본값은 get)
+                데이타 전송방식(서버 자원에 대한 요청방식)을 의미
+               ------------------+-----------------+------------
+               데이타 전송 방식   |      get        |      post
+               ------------------+-----------------+---------------
+               URL노출           |  데이타 노출됨   | 노출 안됨
+               ------------------+-----------------+--------------
+               전송방식         | HTTP 요청헤더에 포함  | HTTP 요청 바디에 내용이
+                                 | 돼서 전송됨      | 포함돼서 전송됨
+            ---------------------+-----------------+-----------------
+               데이타량          | 최대 4KB         | 무한대
+        -------------------------+-----------------+----------------
+
+        요청 헤더: 크기 제한 O
+        요청 바디: 크기 제한 X (그래서 파일 업로드는 무조건 post방식)
+
+        *get방식에서 URL을 통해 데이타 전송시
+        FORM태그 하위 요소의 NAME속성에 지정한 이름을 통해서 전송 된다
+        즉 이름=값(사용자가 입력하거나 선택한 값)의 쌍으로
+           전송
+           여러개 전송시에는
+           이름1=값1&이름2=값2&.....즉 &로 연결되어서 전송됨
+
+        target: 이 속성은 a태그의 target속성과 같은 기능
+
+        enctype: URL 인코딩방식 지정
+                 application/x-www-form-urlencoded(디폴트값)
+                 multipart/form-data(파일 업로드)
+    -->
+
+    <div>
+        <h2>form태그로 데이터 전송하기</h2>
+        <h3>GET 방식 요청</h3>
+        <form action="A09.html">
+            아이디 : <input type="text" name="user"/>
+            비밀번호 : <input type="password" name="pass"/>
+            <input type="submit" value="로그인"/>
+        </form>
+
+        <h3>POST 방식 요청</h3>
+        <form action="A09.html" method="post">
+            아이디 : <input type="text" name="user"/>
+            비밀번호 : <input type="password" name="pass"/>
+            <input type="submit" value="로그인"/>
+        </form>
+
+        <h3>action 속성 생략(현재 페이지를 다시 요청)/method 속성 생략(GET)</h3>
+        <form >
+            아이디 : <input type="text" name="user"/>
+            비밀번호 : <input type="password" name="pass"/>
+            날짜 : <input type="date" name="date"/>
+            색상 : <input type="color" name="color"/>
+            이메일 : <input type="email" name="email"/>
+            나이 : <input type="number" name="age" min="1" max="200"/>
+            <input type="submit" value="로그인"/>
+        </form>
+
+        <h3>a태그로 데이터 전송(GET 방식)</h3>
+        <a href="Form13_1.html?user=KIM&pass=2024-4-30&date=2024-04-30&color=%23ffadad&email=aaa%40naver.com&age=20">GET 요청</a>
+
+
+
+    </div>
+
+
+</body>
+</html>

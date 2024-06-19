@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarginPadding07.html</title>
+</head>
+<body>
+    <h2>여백관련 속성</h2>
+    <div>
+        <h3>padding(안쪽 여백)</h3>
+        <div style="border: 1px red solid; 
+        box-sizing: border-box; 
+        padding-top: 20px; 
+        padding-right: 40px; 
+        padding-bottom: 60px; 
+        padding-left: 80px;">상하좌우 여백 각각 지정(블락엘리먼트)</div> <!--13:03 기억하고있어야해 부모만큼width컨텐츠만큼height-->
+        <hr/>
+        <div style="border: 1px red solid; box-sizing: border-box; padding: 40px;;" >상하좌우 여백 동시 지정(블락엘리먼트)</div>
+
+        <hr/>
+        <!-- 왼쪽 여백을 줄때만 컨텐츠가 오른쪽으로 움직인다.
+        그외 (위/아래/오른쪽)는 텍스트는 그대로 있고 ※※※※※
+        영역이 늘어난다-->
+        <span style="border: 1px green solid; box-sizing: border-box; padding-top: 20px; padding-right: 40px; padding-bottom: 60px; padding-left: 80px;">인라인 엘리먼트</span>
+
+
+        <h3>margin(바깥쪽 여백)</h3>
+        <fieldset>
+            <legend>block과 block</legend>
+            <!--
+            block1과 block2는 서로 margin-top 및 margin-bottom이 적용되고
+            (상하로 배치)
+            block1과 block2에 margin-left 와 margin-right는
+            부모 영역과의 여백이다.
+            그래서 margin-left 와 margin-right를 주면
+            영역의 가로폭이 줄어 든다.
+            -->
+            <!-- block1의 bottom margin과 block2의 top margin이 겹치기 때문에 margin이 큰 값에 따름 (아래의 경우 두 블락 사이의 마진은 100px) -->
+            <div style="border: 1px green solid; box-sizing: border-box; margin-bottom: 50px; margin-top: 50px; margin-right: 50px; margin-left: 50px;">block1</div>
+            <div style="border: 1px red solid; box-sizing: border-box; margin-top: 100px;">block2</div>
+        </fieldset>
+        <!--결론은 인라인은 margin-left와 margin-right만 적용된다 -->
+
+        <fieldset>
+            <legend>block과 inline</legend>
+            <!-- block 에 마진을 주자 (inline에 줘도 안먹음) -->
+            <div style="border: 1px red solid; box-sizing: border-box; margin-bottom: 50px;">block</div>
+            <!-- 인라인도 margin-left는 부모영역과의 여백이다:margin-left만 적용됨 -->
+            <span style="border: 1px green solid; box-sizing: border-box; margin-top: 100px; margin-left: 100px;">inline</span>
+        </fieldset>
+
+        <!-- 수직으로 컨텐츠를 정가운데 배치시에는 위쪽하고 아래쪽 padding을 동일하게 주면된다
+             단,padding을 준 부모영역이 그만큼 늘어난다
+        -->
+        <fieldset style="padding-top: 50px; padding-bottom: 50px;">
+            <legend>inline과 inline</legend>
+            <!--
+            인라인 사이의 여백은 두 요소의 여백을 더한 여백이다 (margin-right, margin-left)
+
+            인라인 인 경우 margin-top 및 margin-bottom은
+            부모와 여백을 의미하지만 (여백이) 적용이 안된다.
+            ※※※ 이때는 부모에서 padding으로 적용한다
+            -->
+            <!-- 블락과 블락의 margin은 큰값 적용이지만 인라인과 인라인은 합산으로 margin 계산 -->
+            <span style="border: 1px red solid; box-sizing: border-box; margin-right: 100px; margin-top: 100px; margin-bottom: 100px;">inline1</span>
+            <span style="border: 1px green solid; box-sizing: border-box; margin-left: 150px;">inline2</span>
+        </fieldset>
+
+        <fieldset>
+            <legend>블락엘리먼트 안의 컨텐츠 정렬</legend>
+            <!--
+              수평정렬: text-align:center
+              수직정렬: height와 line-height값을 동일하게 (영역이 늘어나지 않는다)
+            -->
+            <div style="background-color: red; width: 200px; height: 200px; line-height:200px; text-align: center;">텍스트 정렬</div>
+        </fieldset>
+    </div>
+</body>
+</html>

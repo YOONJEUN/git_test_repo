@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyboardEvent19.html</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            var input = document.querySelector('input');
+            input.onkeydown = function(e){
+                console.log('이벤트명: ', e.type); //이벤트명:  keydown
+                console.log('사용자가 입력한 키값: ', e.key); //CapsLock | Shift | ArrowUp | Enter
+                console.log('사용자가 입력한 키의 아스키코드값: ', e.keyCode); //더 이상 사용되지 않고 대신 key 사용
+                console.log('사용자가 입력한 키 코드 값: ', e.which);
+                //입력 후 엔터 쳤을 때 입력한 텍스트 문자열 출력
+                if(e.key.toUpperCase() === 'ENTER'){
+                    //이벤트 핸들러 안에서 this는 e.target이다.
+                    console.log(this.value);
+                    console.log(e.target.value);
+                }
+
+                //beforeinput 이벤트
+                var before = document.querySelector('fieldset > input:last-child');
+                console.log(before);
+                before.onbeforeinput = function(){
+                    console.log('입력 바로 직전 발생하는 이벤트');
+                };
+
+
+
+            };
+
+            
+        });
+
+        function fnKeyHandler(flag){
+            switch (flag) {
+                case 1: console.log('keyup 이벤트 발생'); break;
+                //keypress 이벤트: 이 이벤트는 
+                case 2: console.log('keypress 이벤트 발생'); break;
+                //backspace 및 Delete키 누를 때도 발생, 방향키 누를 때는 발생하지 않음
+                //즉 컨텐츠가 변하면 발생한다
+                default: console.log('beforeinput 이벤트 발생');
+            }
+        }
+
+
+        function fnSetFocus(inputNode){
+            if(inputNode.value.length === 6) document.querySelector('#ssn').focus();
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>key이벤트 테스트</legend>
+        keydown: <input type="text"/>
+        keyup: <input type="text" onkeyup="fnKeyHandler(1)" />
+        keypress: <input type="text" onkeypress="fnKeyHandler(2)" />
+        beforeinput: <input type="text" title="beforeinput" onbeforeinput="fnKeyHandler(3)" />
+    </fieldset>
+    <fieldset>
+        <legend>주민번호</legend>
+        <input type="text"  size="6" maxlength="6" onkeyup="fnSetFocus(this)" />
+        -
+        <input type="text" size="7" maxlength="7" id="ssn" />
+    </fieldset>
+</body>
+</html>
